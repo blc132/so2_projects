@@ -2,24 +2,31 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
+
 #include "include/Ball.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[  ])
 {
     srand(time(NULL));
-    Ball::initScene(400, 400);
 
-    Ball ball(10, 10, 2.0, static_cast<directon>(rand() % 4));
-    // initscr();
-    // WINDOW *win = newwin(15,15,1,1);
 
-    // box(win, '*', '*');
-    // touchwin(win);
-    // wrefresh(win);
-    // clear();
+    initscr();
+    curs_set(0);
+    int xMax, yMax;
+    getmaxyx(stdscr, yMax, xMax);
+    Ball::initScene(yMax, xMax);
 
-    // getchar();
+    Ball ball(10, 10, 1, 2, 2);
 
-    // endwin();
+    for(int i = 0; i < INT32_MAX; i++)
+    {
+        ball.move();
+        //ball.printLogs();
+        clear();
+        mvprintw(ball.getX(), ball.getY(), "o" );
+        refresh();
+        usleep(100000);
+    }
     return 0;
 } 

@@ -8,7 +8,7 @@ class Ball
 {
     public:
         Ball();
-        Ball(int x, int y, float speed, directon dir);
+        Ball(int x, int y, int speed, int xDirection, int yDirection);
         ~Ball();
         
         static void initScene(int windowX, int windowY);
@@ -16,14 +16,18 @@ class Ball
         void move();
         int getX();
         int getY();
-        float getSpeed();
+        int getSpeed();
+        void printLogs();
+
+        
     private:
         static int xMax;
         static int yMax;
         int x;
         int y;
-        directon dir;
-        float speed;
+        int xDirection;
+        int yDirection;
+        int speed;
 };
 
 #endif
