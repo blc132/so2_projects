@@ -1,19 +1,25 @@
 #include <iostream>
 #include <ncurses.h>
-
+#include <stdlib.h>
+#include <time.h>
+#include "include/Ball.h"
 
 int main(int argc, char *argv[])
 {
-    initscr();
-    WINDOW *win = newwin(15,15,1,1);
+    srand(time(NULL));
+    Ball::initScene(400, 400);
 
-    box(win, '*', '*');
-    touchwin(win);
-    wrefresh(win);
-    clear();
+    Ball ball(10, 10, 2.0, static_cast<directon>(rand() % 4));
+    // initscr();
+    // WINDOW *win = newwin(15,15,1,1);
 
-    getchar();
+    // box(win, '*', '*');
+    // touchwin(win);
+    // wrefresh(win);
+    // clear();
 
-    endwin();
+    // getchar();
+
+    // endwin();
     return 0;
 } 

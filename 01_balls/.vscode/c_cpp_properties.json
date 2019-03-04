@@ -4,7 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/enums",
+                "${workspaceFolder}/src"
             ],
             "defines": [],
             "compilerPath": "/bin/gcc",
