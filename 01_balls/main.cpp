@@ -1,10 +1,19 @@
 #include <iostream>
+#include <ncurses.h>
 
-using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
-    cout<<"Hello world"<<endl;
-    return 0;
+    initscr();
+    WINDOW *win = newwin(15,15,1,1);
 
-}   
+    box(win, '*', '*');
+    touchwin(win);
+    wrefresh(win);
+    clear();
+
+    getchar();
+
+    endwin();
+    return 0;
+} 
