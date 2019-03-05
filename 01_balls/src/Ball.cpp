@@ -50,8 +50,10 @@ void Ball::move()
         yDirection = -yDirection;
     }
     
-    x += xDirection;
-    y += yDirection;
+    // x += xDirection*speed*(rand() % 2);
+    // y += yDirection*speed*(rand() % 2);
+    y += yDirection*speed;
+    x += xDirection*speed;
 }
 
 void Ball::printLogs()
@@ -59,6 +61,13 @@ void Ball::printLogs()
     std::cout<<"x: "<<std::to_string(x)<<" y: "<<std::to_string(y)<<std::endl;
     std::cout<<"xDirection: "<<std::to_string(xDirection)<<" yDirection: "<<std::to_string(yDirection)<<std::endl;
 }
+
+std::thread Ball::moveThread()
+{
+    return std::thread(&Ball::move, this);
+}
+
+
 
 
 

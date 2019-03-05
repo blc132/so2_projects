@@ -2,6 +2,7 @@
 #define BALL_H
 
 #include <iostream>
+#include <thread>
 #include "../enums/direction.h"
 
 class Ball
@@ -18,6 +19,7 @@ class Ball
         int getY();
         int getSpeed();
         void printLogs();
+        std::thread moveThread();
 
         
     private:
