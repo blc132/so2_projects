@@ -8,11 +8,11 @@ Ball::Ball()
 
 }
 
-Ball::Ball(int x, int y, int speed, int xDirection, int yDirection)
+Ball::Ball(int x, int y, int slow, int xDirection, int yDirection)
 {
     this->x = x;
     this->y = y;
-    this->speed = speed;
+    this->slow = slow;
     this->xDirection = xDirection;
     this->yDirection = yDirection;
 }
@@ -22,7 +22,7 @@ Ball::~Ball()
 
 }
 
-void Ball::initScene(int windowX, int windowY)
+void Ball::drawScene(int windowX, int windowY)
 {
     xMax = windowX;
     yMax = windowY;
@@ -38,23 +38,43 @@ int Ball::getY()
     return this->y;
 }
 
+int Ball::getSlow()
+{
+    return this->slow;
+}
+
+int Ball::getPreviousX()
+{
+    return this->previousX;
+}
+
+int Ball::getPreviousY()
+{
+    return this->previousY;
+}
 
 void Ball::move()
 {
-    if(this->x >= xMax || this->x <= 0)
+    while(true)
     {
-        xDirection = -xDirection;
+        if(this->x >= xMax || this->x <= 0)
+        {
+            xDirection = -xDirection;
+        }
+        if(this->y >= yMax || this->y <= 0)
+        {
+            yDirection = -yDirection;
+        }
+        previousX = x;
+        previousY = y;
+        y += yDirection;
+        x += xDirection;
+
+        mvprintw(previousX, previousY, " " );
+        mvprintw(x, y, "o" );
     }
-    if(this->y >= yMax || this->y <= 0)
-    {
-        yDirection = -yDirection;
-    }
-    
-    // x += xDirection*speed*(rand() % 2);
-    // y += yDirection*speed*(rand() % 2);
-    y += yDirection*speed;
-    x += xDirection*speed;
 }
+
 
 void Ball::printLogs()
 {

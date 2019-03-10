@@ -1,8 +1,8 @@
 enum directon
 {
     up,
-    down,
     left,
+    down,
     right,
     up_left,
     up_right,
