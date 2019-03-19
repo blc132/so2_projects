@@ -9,12 +9,12 @@ Ball::Ball()
 
 }
 
-Ball::Ball(int x, int y, int slow, directon ballDirection)
+Ball::Ball(int x, int y, speed ballSpeed, directon ballDirection)
 {
     this->x = x;
     this->y = y;
-    this->slow = slow;
     setDirection(ballDirection);
+    setSpeed(ballSpeed);
 }
 
 Ball::~Ball()
@@ -48,11 +48,6 @@ int Ball::getY()
     return this->y;
 }
 
-int Ball::getSlow()
-{
-    return this->slow;
-}
-
 void Ball::move()
 {
     while(runningFlag) {
@@ -66,7 +61,7 @@ void Ball::move()
 
         y += yDirection;
         x += xDirection;
-      std::this_thread::sleep_for(std::chrono::milliseconds(slow));
+      std::this_thread::sleep_for(std::chrono::milliseconds(slowdown));
     }
 }
 
@@ -123,6 +118,28 @@ void Ball::setDirection(directon ballDirection) {
         default:
             xDirection = 0;
             yDirection = 0;
+
+    }
+}
+
+void Ball::setSpeed(speed ballSpeed)
+{
+    switch (ballSpeed)
+    {
+        case slow:
+            slowdown = 200;
+            break;
+
+        case medium:
+            slowdown = 100;
+            break;
+
+        case fast:
+            slowdown = 50;
+            break;
+
+        default:
+            slowdown = 100;
 
     }
 }

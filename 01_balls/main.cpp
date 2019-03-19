@@ -12,7 +12,6 @@
 std::vector<Ball*> balls;
 std::vector<std::thread> ballsThreads;
 static bool running = true;
-int ballsSlow = 100;
 int ballsCreationTime = 5000;
 int xMax, yMax;
 
@@ -24,7 +23,9 @@ void generateBalls()
         getmaxyx(stdscr, yMax, xMax);
         Ball::setMaximumCords(xMax, yMax);
         directon ballDirection = static_cast<directon>(rand() % 8);
-        balls.push_back(new Ball(xMax/2, yMax/2, ballsSlow, ballDirection));
+        speed ballSpeed = static_cast<speed>(rand() % 2);
+
+        balls.push_back(new Ball(xMax/2, yMax/2, ballSpeed, ballDirection));
         ballsThreads.push_back(balls.back()->moveThread());
         std::this_thread::sleep_for(std::chrono::milliseconds(ballsCreationTime));
     }

@@ -6,12 +6,13 @@
 #include <chrono>
 #include <ncurses.h>
 #include "../enums/direction.h"
+#include "../enums/speed.h"
 
 class Ball
 {
 public:
     Ball();
-    Ball(int x, int y, int slow, directon ballDirection);
+    Ball(int x, int y, speed ballSpeed, directon ballDirection);
     ~Ball();
 
     static void setMaximumCords(int windowX, int windowY);
@@ -21,9 +22,9 @@ public:
     void move();
     int getX();
     int getY();
-    int getSlow();
     void printLogs();
     void setDirection(directon ballDirection);
+    void setSpeed(speed ballSpeed);
 
     std::thread moveThread();
 
@@ -35,7 +36,7 @@ private:
     int y;
     int xDirection;
     int yDirection;
-    int slow;
+    int slowdown;
 };
 
 #endif
