@@ -13,6 +13,7 @@ std::vector<Ball*> balls;
 std::vector<std::thread> ballsThreads;
 static bool running = true;
 int ballsSlow = 100;
+int ballsCreationTime = 5000;
 int xMax, yMax;
 
 
@@ -25,7 +26,7 @@ void generateBalls()
         directon ballDirection = static_cast<directon>(rand() % 8);
         balls.push_back(new Ball(xMax/2, yMax/2, ballsSlow, ballDirection));
         ballsThreads.push_back(balls.back()->moveThread());
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(ballsCreationTime));
     }
 }
 
@@ -70,8 +71,6 @@ int main(int argc, char *argv[  ])
     std::thread renderSceneThread(renderScene);
     std::thread generateBallsThread(generateBalls);
     std::thread checkIfRunningThread(checkIfRunning);
-
-    while(running)  { std::this_thread::sleep_for(std::chrono::milliseconds(500)); }
 
     renderSceneThread.join();
     generateBallsThread.join();
