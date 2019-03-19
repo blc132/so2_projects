@@ -22,8 +22,6 @@ public:
     int getX();
     int getY();
     int getSlow();
-    int getPreviousX();
-    int getPreviousY();
     void printLogs();
 
     std::thread moveThread();
@@ -34,8 +32,6 @@ private:
     static bool runningFlag;
     int x;
     int y;
-    int previousX;
-    int previousY;
     int xDirection;
     int yDirection;
     int slow;

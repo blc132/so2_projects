@@ -55,16 +55,6 @@ int Ball::getSlow()
     return this->slow;
 }
 
-int Ball::getPreviousX()
-{
-    return this->previousX;
-}
-
-int Ball::getPreviousY()
-{
-    return this->previousY;
-}
-
 void Ball::move()
 {
     while(runningFlag) {
@@ -79,9 +69,9 @@ void Ball::move()
 //        std::cout<<"x: "<<std::to_string(x)<<" y: "<<std::to_string(y)<<std::endl;
 //        std::cout<<"xDirection: "<<std::to_string(xDirection)<<" yDirection: "<<std::to_string(yDirection)<<std::endl;
         y += yDirection;
-          std::cout<<"runningFlah: "<<std::to_string(runningFlag)<<" yDirection: "<<std::to_string(yDirection)<<std::endl;
-
         x += xDirection;
+//        std::cout<<"x: "<<std::to_string(x)<<" y: "<<std::to_string(y)<<std::endl;
+//        std::cout<<"xDirection: "<<std::to_string(xDirection)<<" yDirection: "<<std::to_string(yDirection)<<std::endl;
 //        std::cout<<"x: "<<std::to_string(x)<<" y: "<<std::to_string(y)<<std::endl;
 //        std::cout<<"test"<<std::endl;
       std::this_thread::sleep_for(std::chrono::milliseconds(slow));
