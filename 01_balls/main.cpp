@@ -56,6 +56,8 @@ void terminateThreadsOfBalls()
 
 void checkIfRunning()
 {
+    cbreak();
+    noecho();
     while('x' != getch())
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     running = false;
