@@ -9,13 +9,12 @@ Ball::Ball()
 
 }
 
-Ball::Ball(int x, int y, int slow, int xDirection, int yDirection)
+Ball::Ball(int x, int y, int slow, directon ballDirection)
 {
     this->x = x;
     this->y = y;
     this->slow = slow;
-    this->xDirection = xDirection;
-    this->yDirection = yDirection;
+    setDirection(ballDirection);
 }
 
 Ball::~Ball()
@@ -85,10 +84,61 @@ void Ball::printLogs()
     std::cout<<"xDirection: "<<std::to_string(xDirection)<<" yDirection: "<<std::to_string(yDirection)<<std::endl;
 }
 
+void Ball::setDirection(directon ballDirection) {
+    switch (ballDirection)
+    {
+        case up:
+            xDirection = 0;
+            yDirection = -1;
+            break;
+
+        case left:
+            xDirection = -1;
+            yDirection = 0;
+            break;
+
+        case down:
+            xDirection = 0;
+            yDirection = 1;
+            break;
+
+        case right:
+            xDirection = 1;
+            yDirection = 0;
+            break;
+
+        case up_left:
+            xDirection = -1;
+            yDirection = -1;
+            break;
+
+        case up_right:
+            xDirection = 1;
+            yDirection = -1;
+            break;
+
+        case down_left:
+            xDirection = -1;
+            yDirection = 1;
+            break;
+
+        case down_right:
+            xDirection = 1;
+            yDirection = 1;
+            break;
+
+        default:
+            xDirection = 0;
+            yDirection = 0;
+
+    }
+}
+
 std::thread Ball::moveThread()
 {
     return std::thread(&Ball::move, this);
 }
+
 
 
 

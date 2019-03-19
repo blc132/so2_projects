@@ -11,7 +11,7 @@ class Ball
 {
 public:
     Ball();
-    Ball(int x, int y, int slow, int xDirection, int yDirection);
+    Ball(int x, int y, int slow, directon ballDirection);
     ~Ball();
 
     static void drawScene(int windowX, int windowY);
@@ -23,6 +23,7 @@ public:
     int getY();
     int getSlow();
     void printLogs();
+    void setDirection(directon ballDirection);
 
     std::thread moveThread();
 
@@ -35,6 +36,7 @@ private:
     int xDirection;
     int yDirection;
     int slow;
+    directon ballDirection;
 };
 
 #endif

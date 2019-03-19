@@ -22,7 +22,8 @@ void generateBalls()
     {
         getmaxyx(stdscr, yMax, xMax);
         Ball::drawScene(xMax, yMax);
-        balls.push_back(new Ball(xMax/2, yMax/2, slow, (rand() % 3) - 1, (rand() % 3) - 1));
+        directon ballDirection = static_cast<directon>(rand() % 8);
+        balls.push_back(new Ball(xMax/2, yMax/2, slow, ballDirection));
         ballsThreads.push_back(balls.back()->moveThread());
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
