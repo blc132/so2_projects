@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <thread>
+#include <chrono>
 #include <ncurses.h>
 #include "../enums/direction.h"
 
@@ -14,6 +15,8 @@ public:
     ~Ball();
 
     static void drawScene(int windowX, int windowY);
+    static void setRunningFlag(bool flag);
+    static bool getRunningFlag();
 
     void move();
     int getX();
@@ -22,12 +25,13 @@ public:
     int getPreviousX();
     int getPreviousY();
     void printLogs();
-    std::thread moveThread();
 
+    std::thread moveThread();
 
 private:
     static int xMax;
     static int yMax;
+    static bool runningFlag;
     int x;
     int y;
     int previousX;

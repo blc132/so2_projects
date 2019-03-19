@@ -2,6 +2,7 @@
 
 int Ball::xMax;
 int Ball::yMax;
+bool Ball::runningFlag;
 
 Ball::Ball()
 {
@@ -26,6 +27,17 @@ void Ball::drawScene(int windowX, int windowY)
 {
     xMax = windowX;
     yMax = windowY;
+}
+
+
+bool Ball::getRunningFlag()
+{
+    return runningFlag;
+}
+
+void Ball::setRunningFlag(bool flag)
+{
+    runningFlag = flag;
 }
 
 int Ball::getX()
@@ -55,23 +67,24 @@ int Ball::getPreviousY()
 
 void Ball::move()
 {
-    while(true)
-    {
-        if(this->x >= xMax || this->x <= 0)
-        {
+    while(runningFlag) {
+        if (this->x >= xMax || this->x <= 0) {
             xDirection = -xDirection;
         }
-        if(this->y >= yMax || this->y <= 0)
-        {
+        if (this->y >= yMax || this->y <= 0) {
             yDirection = -yDirection;
         }
-        previousX = x;
-        previousY = y;
+//        previousX = x;
+//        previousY = y;
+//        std::cout<<"x: "<<std::to_string(x)<<" y: "<<std::to_string(y)<<std::endl;
+//        std::cout<<"xDirection: "<<std::to_string(xDirection)<<" yDirection: "<<std::to_string(yDirection)<<std::endl;
         y += yDirection;
-        x += xDirection;
+          std::cout<<"runningFlah: "<<std::to_string(runningFlag)<<" yDirection: "<<std::to_string(yDirection)<<std::endl;
 
-        mvprintw(previousX, previousY, " " );
-        mvprintw(x, y, "o" );
+        x += xDirection;
+//        std::cout<<"x: "<<std::to_string(x)<<" y: "<<std::to_string(y)<<std::endl;
+//        std::cout<<"test"<<std::endl;
+      std::this_thread::sleep_for(std::chrono::milliseconds(slow));
     }
 }
 

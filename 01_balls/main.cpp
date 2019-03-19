@@ -4,13 +4,48 @@
 #include <time.h>
 #include <unistd.h>
 #include <random>
+#include <chrono>
+#include <vector>
 
 #include "include/Ball.h"
 
 std::vector<Ball> balls;
-bool running = true;
+std::vector<std::thread> ballsThreads;
+static bool running = true;
+int slow = 1200000;
 int xMax, yMax;
 
+
+void generateBalls()
+{
+//    while(running)
+//    {
+        Ball ball =  Ball(yMax/2, xMax/2, slow, (rand() % 3) - 1, (rand() % 3) - 1);
+        balls.push_back(ball);
+        ballsThreads.push_back(ball.moveThread());
+        usleep(1000000);
+//    }
+}
+
+void renderScene()
+{
+    while(running)
+    {
+//        clear();
+
+        for(int i = 0; i < balls.size(); i++)
+        {
+                balls[i].printLogs();
+                std::cout<<"plika nr: "<<std::to_string(i)<<std::endl;
+                mvprintw(balls[i].getX(), balls[i].getY(), "o" );
+
+        }
+//        refresh();
+        usleep(100000);
+
+
+    }
+}
 
 void checkIfRunning()
 {
@@ -18,50 +53,23 @@ void checkIfRunning()
     running = false;
 }
 
-void generateBalls()
-{
-    while(running)
-    {
-        Ball ball(yMax/2, xMax/2, 120000, (rand() % 3), (rand() % 3));
-        std::thread ballThread = ball.moveThread();
-        balls.push_back(ball);
-        usleep(1000000);
-    }
-}
-
 int main(int argc, char *argv[  ])
 {
     srand(time(NULL));
-    initscr();
-    curs_set(0);
-    getmaxyx(stdscr, yMax, xMax);
-    Ball::drawScene(yMax, xMax);
+//    initscr();
+//    curs_set(0);
+//    getmaxyx(stdscr, yMax, xMax);
+    xMax = 200;
+    yMax = 200;
+    Ball::drawScene(yMax, yMax);
+    Ball::setRunningFlag(true);
 
-    Ball ball(yMax/2, xMax/2, 120000, (rand() % 3), (rand() % 3));
-    balls.push_back(ball);
-    std::cout<<std::to_string(xMax/2)<<" "<<std::to_string(yMax/2)<<std::endl;
-    std::cout<<std::to_string(ball.getX())<<" "<<std::to_string(ball.getY())<<std::endl;
-
-    std::thread runningThread(checkIfRunning);
     std::thread generateBallsThread(generateBalls);
+    std::thread renderSceneThread(renderScene);
+    std::thread checkIfRunningThread(checkIfRunning);
 
-    while(running)
-    {
+    while(running)  { std::this_thread::sleep_for(std::chrono::milliseconds(500)); }
 
-        for(int i = 0; i < balls.size(); i++)
-        {
-            balls[i].move();
-            //ball.printLogs();
-            mvprintw(balls[i].getPreviousX(), balls[i].getPreviousY(), " " );
-            mvprintw(balls[i].getX(), balls[i].getY(), "o" );
-            usleep(balls[i].getSlow());
-            refresh();
-
-        }
-
-    }
-
-    runningThread.join();
     endwin();
     return 0;
 }
