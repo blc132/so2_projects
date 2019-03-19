@@ -14,7 +14,7 @@ public:
     Ball(int x, int y, int slow, directon ballDirection);
     ~Ball();
 
-    static void drawScene(int windowX, int windowY);
+    static void setMaximumCords(int windowX, int windowY);
     static void setRunningFlag(bool flag);
     static bool getRunningFlag();
 
@@ -36,7 +36,6 @@ private:
     int xDirection;
     int yDirection;
     int slow;
-    directon ballDirection;
 };
 
 #endif

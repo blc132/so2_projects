@@ -12,7 +12,7 @@
 std::vector<Ball*> balls;
 std::vector<std::thread> ballsThreads;
 static bool running = true;
-int slow = 100;
+int ballsSlow = 100;
 int xMax, yMax;
 
 
@@ -21,9 +21,9 @@ void generateBalls()
     while(running)
     {
         getmaxyx(stdscr, yMax, xMax);
-        Ball::drawScene(xMax, yMax);
+        Ball::setMaximumCords(xMax, yMax);
         directon ballDirection = static_cast<directon>(rand() % 8);
-        balls.push_back(new Ball(xMax/2, yMax/2, slow, ballDirection));
+        balls.push_back(new Ball(xMax/2, yMax/2, ballsSlow, ballDirection));
         ballsThreads.push_back(balls.back()->moveThread());
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
@@ -37,16 +37,11 @@ void renderScene()
 
         for(int i = 0; i < balls.size(); i++)
         {
-//            std::cout<<"plika nr: "<<std::to_string(i)<<std::endl;
-//                balls[0]->printLogs();
-//                std::cout<<"plika nr: "<<std::to_string(i)<<std::endl;
             mvprintw(balls[i]->getY(), balls[i]->getX(), "o" );
-
         }
+
         refresh();
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-
-
     }
 }
 
@@ -61,7 +56,7 @@ void terminateThreadsOfBalls()
 void checkIfRunning()
 {
     while('x' != getch())
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     running = false;
 }
 
