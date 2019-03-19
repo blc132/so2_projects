@@ -58,7 +58,7 @@ int Ball::getSlow()
 void Ball::move()
 {
     while(runningFlag) {
-        if (this->x >= xMax || this->x <= 0) {
+        if (this->x >= xMax  || this->x <= 0) {
             xDirection = -xDirection;
         }
         if (this->y >= yMax || this->y <= 0) {

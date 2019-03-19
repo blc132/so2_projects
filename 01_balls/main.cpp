@@ -20,7 +20,9 @@ void generateBalls()
 {
     while(running)
     {
-        balls.push_back(new Ball(yMax/2, xMax/2, slow, (rand() % 3) - 1, (rand() % 3) - 1));
+        getmaxyx(stdscr, yMax, xMax);
+        Ball::drawScene(xMax, yMax);
+        balls.push_back(new Ball(xMax/2, yMax/2, slow, (rand() % 3) - 1, (rand() % 3) - 1));
         ballsThreads.push_back(balls.back()->moveThread());
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
@@ -35,15 +37,23 @@ void renderScene()
         for(int i = 0; i < balls.size(); i++)
         {
 //            std::cout<<"plika nr: "<<std::to_string(i)<<std::endl;
-//                balls[i].printLogs();
+//                balls[0]->printLogs();
 //                std::cout<<"plika nr: "<<std::to_string(i)<<std::endl;
-            mvprintw(balls[i]->getX(), balls[i]->getY(), "o" );
+            mvprintw(balls[i]->getY(), balls[i]->getX(), "o" );
 
         }
         refresh();
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
 
+    }
+}
+
+void terminateThreadsOfBalls()
+{
+    for (int i = 0; i < ballsThreads.size(); ++i)
+    {
+        ballsThreads[i].join();
     }
 }
 
@@ -59,18 +69,18 @@ int main(int argc, char *argv[  ])
     srand(time(NULL));
     initscr();
     curs_set(0);
-    getmaxyx(stdscr, yMax, xMax);
-//    xMax = 200;
-//    yMax = 200;
-    Ball::drawScene(yMax, yMax);
     Ball::setRunningFlag(true);
 
-    std::thread generateBallsThread(generateBalls);
     std::thread renderSceneThread(renderScene);
+    std::thread generateBallsThread(generateBalls);
     std::thread checkIfRunningThread(checkIfRunning);
 
     while(running)  { std::this_thread::sleep_for(std::chrono::milliseconds(500)); }
 
+    renderSceneThread.join();
+    generateBallsThread.join();
+    terminateThreadsOfBalls();
+    checkIfRunningThread.join();
     endwin();
     return 0;
 }
