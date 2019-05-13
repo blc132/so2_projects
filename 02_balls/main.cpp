@@ -45,7 +45,7 @@ void renderScene()
 {
     while(running)
     {
-        window->renderBalls(balls);
+        window->renderScene(balls);
     }
 }
 
@@ -71,8 +71,7 @@ int main(int argc, char *argv[  ])
     srand(time(NULL));
     Ball::setRunningFlag(true);
     
-    window = new Window();
-    
+    window = new Window();  
 
     std::thread renderSceneThread(renderScene);
     std::thread generateBallsThread(generateBalls);
@@ -82,6 +81,6 @@ int main(int argc, char *argv[  ])
     generateBallsThread.join();
     terminateThreadsOfBalls();
     checkIfRunningThread.join();
-    endwin();
+
     return 0;
 }

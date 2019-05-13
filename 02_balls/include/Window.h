@@ -13,14 +13,19 @@ class Window
 public:
     int height;
     int width;
+    int wallLeftPadding = 40;
 
     Window();
     ~Window();
-    void renderBalls(std::vector<Ball*> &balls);
+    void renderScene(std::vector<Ball*> &balls);
     int getHeight();
     int getWidth();
+    int getWallLeftPadding();
 private:
     bool running;
+
+    void renderWall();
+    void renderBalls(std::vector<Ball*> &balls);
 };
 
 #endif

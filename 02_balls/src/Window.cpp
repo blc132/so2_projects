@@ -19,19 +19,6 @@ Window::~Window()
     endwin();
 }
 
-void Window::renderBalls(std::vector<Ball*> &balls)
-{
-        clear();
-
-        for(int i = 0; i < balls.size(); i++)
-        {
-            mvprintw(balls[i]->getY(), balls[i]->getX(), "o" );
-        }
-
-        refresh();
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-}
-
 int Window::getHeight()
 {
     return height;
@@ -40,4 +27,38 @@ int Window::getHeight()
 int Window::getWidth()
 {
     return width;
+}
+
+int Window::getWallLeftPadding()
+{
+    return wallLeftPadding;
+}
+
+void Window::renderScene(std::vector<Ball*> &balls)
+{
+    clear();
+
+    renderWall();
+    renderBalls(balls);
+
+    refresh();
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+}
+
+
+void Window::renderWall()
+{
+    for(int i = 0; i < width; i++)
+    {
+        mvprintw(i, wallLeftPadding, "|" );
+    } 
+}
+
+
+void Window::renderBalls(std::vector<Ball*> &balls)
+{
+    for(int i = 0; i < balls.size(); i++)
+    {
+        mvprintw(balls[i]->getY(), balls[i]->getX(), "o" );
+    }
 }
