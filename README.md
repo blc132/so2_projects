@@ -10,4 +10,6 @@ Poszczególne projekty:
        ```sh 
         g++ src/Ball.cpp main.cpp -lncurses && ./main.out
   - 02_balls - rozwinięcie pierwszego projektu. Wydzielenie obszaru, w którym może być tylko "n" kulek. Jeśli jakaś kulka chce wleciec ponad stan to jest usypiana i czeka aż zrobi się miejsce. Zasada kolejkowania: first in first out.
+       ```sh
+        g++ src/Ball.cpp src/Window.cpp main.cpp -lncurses && ./main.out
   - 03_???
