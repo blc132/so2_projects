@@ -22,6 +22,7 @@ Window::~Window()
     endwin();
 }
 
+#pragma region GETTERS_SETTERS
 int Window::getHeight()
 {
     return this->height;
@@ -41,6 +42,7 @@ void Window::setWallLeftPadding(int value)
 {
     wallLeftPadding = value;
 }
+#pragma endregion
 
 void Window::renderScene(std::vector<Ball*> &balls)
 {

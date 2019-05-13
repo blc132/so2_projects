@@ -4,6 +4,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <mutex>
 #include <ncurses.h>
 #include "../enums/direction.h"
 #include "../enums/speed.h"
@@ -47,6 +48,8 @@ private:
     int xDirection;
     int yDirection;
     int slowdown;
+
+    std::mutex checkLeftAreaMutex;
 };
 
 #endif

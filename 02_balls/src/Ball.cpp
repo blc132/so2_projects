@@ -27,6 +27,7 @@ Ball::~Ball()
 
 }
 
+#pragma region GETTERS_SETTERS
 void Ball::setMaximumCords(int windowX, int windowY)
 {
     xMax = windowX;
@@ -82,12 +83,17 @@ void Ball::setInLeftArea(bool value)
 {
     this->inLeftArea = value;
 }
+#pragma endregion
 
 void Ball::move()
 {
     while(runningFlag) {
-        bool canMove = !(ballsInLeftArea >= maxNumberOfBallsInLeftArea && !this->inLeftArea && this->x == Window::getWallLeftPadding());
+        checkLeftAreaMutex.lock();
         this->checkIfIsInLeftArea();
+        bool canMove = !(ballsInLeftArea >= maxNumberOfBallsInLeftArea && !this->inLeftArea && this->x == Window::getWallLeftPadding());
+        checkLeftAreaMutex.unlock();
+
+
 
         if(canMove)
         {
@@ -101,7 +107,7 @@ void Ball::move()
 
             y += yDirection;
             x += xDirection;         
-        }
+        }                
         std::this_thread::sleep_for(std::chrono::milliseconds(slowdown));
     }
 }
