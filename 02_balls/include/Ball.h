@@ -45,8 +45,6 @@ private:
     static int ballsInLeftArea;
     static int maxNumberOfBallsInLeftArea;
 
-    std::mutex checkLeftAreaMutex;
-
     bool inLeftArea = false;
     int x;
     int y;

@@ -9,6 +9,8 @@ int Ball::ballsInLeftArea;
 int Ball::maxNumberOfBallsInLeftArea;
 bool Ball::runningFlag;
 
+std::mutex checkLeftAreaMutex;
+
 #pragma region CONSTRUCTORS_DESTRUCTORS
 
 Ball::Ball()
@@ -98,13 +100,11 @@ void Ball::move()
 {
     while(runningFlag) {
 
-        checkLeftAreaMutex.lock();
+        std::unique_lock<std::mutex> lock(checkLeftAreaMutex);
+        printToFile("Zablokowany przez: " + std::to_string(id));
         this->checkIfIsInLeftArea();
-        checkLeftAreaMutex.unlock();        
-        
         bool canMove = !(ballsInLeftArea >= maxNumberOfBallsInLeftArea && !this->inLeftArea && this->x == Window::getWallLeftPadding());
-        // printToFile("pilka nr: " + std::to_string(this->id));
-        // std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+        lock.unlock();      
 
         if(canMove)
         {
@@ -118,7 +118,7 @@ void Ball::move()
 
             y += yDirection;
             x += xDirection;         
-        }                      
+        }
         std::this_thread::sleep_for(std::chrono::milliseconds(slowdown));
     }
 }
@@ -206,13 +206,19 @@ void Ball::setSpeed(speed ballSpeed)
 
 void Ball::checkIfIsInLeftArea()
 {
-    if(x < Window::getWallLeftPadding())
+    if(x <= Window::getWallLeftPadding())
     {
         if(!inLeftArea && ballsInLeftArea < maxNumberOfBallsInLeftArea)
         {
             inLeftArea = true;
+                int x = 0;
+                for(int k=0;k<10000000;k++)
+                {
+                    x++;
+                }
             ballsInLeftArea++;
-            printToFile(std::to_string(ballsInLeftArea));
+            printToFile("Aktualnie w lewym obszarze: " + std::to_string(ballsInLeftArea));
+            printToFile("Do obszaru wleciała piłka o ID: " + std::to_string(this->id));
         }
     }
     else
@@ -221,7 +227,8 @@ void Ball::checkIfIsInLeftArea()
         {
             inLeftArea = false; 
             ballsInLeftArea--;
-            printToFile(std::to_string(ballsInLeftArea));
+            printToFile("Aktualnie w lewym obszarze: " + std::to_string(ballsInLeftArea));
+            printToFile("Z obszaru wyleciała piłka o ID: " + std::to_string(this->id));
         }
     }
 }
