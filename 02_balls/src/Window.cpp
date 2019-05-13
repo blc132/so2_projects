@@ -2,6 +2,9 @@
 #include <vector>
 #include <ncurses.h>
 
+extern void printToFile(std::string data);
+
+int Window::wallLeftPadding;
 
 Window::Window()
 {
@@ -21,12 +24,12 @@ Window::~Window()
 
 int Window::getHeight()
 {
-    return height;
+    return this->height;
 }
 
 int Window::getWidth()
 {
-    return width;
+    return this->width;
 }
 
 int Window::getWallLeftPadding()
@@ -34,10 +37,14 @@ int Window::getWallLeftPadding()
     return wallLeftPadding;
 }
 
+void Window::setWallLeftPadding(int value)
+{
+    wallLeftPadding = value;
+}
+
 void Window::renderScene(std::vector<Ball*> &balls)
 {
     clear();
-
     renderWall();
     renderBalls(balls);
 
@@ -59,6 +66,29 @@ void Window::renderBalls(std::vector<Ball*> &balls)
 {
     for(int i = 0; i < balls.size(); i++)
     {
+        // checkIfBallIsOnLeft(balls[i]);
         mvprintw(balls[i]->getY(), balls[i]->getX(), "o" );
     }
 }
+
+// void Window::checkIfBallIsOnLeft(Ball* ball)
+// {
+//     if(ball->getX() <= wallLeftPadding)
+//     {
+//         if(ball->getInLeftArea() == false)
+//         {
+//             ball->setInLeftArea(true);
+//             Ball::setBallsInLeftArea(Ball::getBallsInLeftArea() + 1);
+//             printToFile(std::to_string(Ball::getBallsInLeftArea() ));
+//         }
+//     }
+//     else
+//     {
+//         if(ball->getInLeftArea() == true)
+//         {
+//             ball->setInLeftArea(false);  
+//             Ball::setBallsInLeftArea(Ball::getBallsInLeftArea() - 1);   
+//             printToFile(std::to_string(Ball::getBallsInLeftArea()));
+//         }
+//     }
+// }

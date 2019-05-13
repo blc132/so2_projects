@@ -1,7 +1,12 @@
 #include "../include/Ball.h"
+#include "../include/Window.h"
+
+extern void printToFile(std::string data);
 
 int Ball::xMax;
 int Ball::yMax;
+int Ball::ballsInLeftArea;
+int Ball::maxNumberOfBallsInLeftArea;
 bool Ball::runningFlag;
 
 Ball::Ball()
@@ -38,6 +43,26 @@ void Ball::setRunningFlag(bool flag)
     runningFlag = flag;
 }
 
+int Ball::getBallsInLeftArea()
+{
+    return ballsInLeftArea;
+}
+
+void Ball::setBallsInLeftArea(int value)
+{
+    ballsInLeftArea = value;
+}
+
+int Ball::getMaxNumberOfBallsInLeftArea()
+{
+    return maxNumberOfBallsInLeftArea;
+}
+
+void Ball::setMaxNumberOfBallsInLeftArea(int value)
+{
+    maxNumberOfBallsInLeftArea = value;
+}
+
 int Ball::getX()
 {
     return this->x;
@@ -48,9 +73,20 @@ int Ball::getY()
     return this->y;
 }
 
+bool Ball::getInLeftArea()
+{
+    return this->inLeftArea;
+}
+
+void Ball::setInLeftArea(bool value)
+{
+    this->inLeftArea = value;
+}
+
 void Ball::move()
 {
     while(runningFlag) {
+        this->checkIfIsInLeftArea();
         if (this->x >= xMax  || this->x <= 0) {
             xDirection = -xDirection;
         }
@@ -61,7 +97,7 @@ void Ball::move()
 
         y += yDirection;
         x += xDirection;
-      std::this_thread::sleep_for(std::chrono::milliseconds(slowdown));
+        std::this_thread::sleep_for(std::chrono::milliseconds(slowdown));
     }
 }
 
@@ -145,6 +181,29 @@ void Ball::setSpeed(speed ballSpeed)
 
     }
 }
+
+void Ball::checkIfIsInLeftArea()
+{
+    if(this->getX() <= Window::getWallLeftPadding())
+    {
+        if(this->getInLeftArea() == false)
+        {
+            inLeftArea = true; 
+            ballsInLeftArea++;
+            printToFile(std::to_string(ballsInLeftArea));
+        }
+    }
+    else
+    {
+        if(this->getInLeftArea() == true)
+        {
+            inLeftArea = false; 
+            ballsInLeftArea--;
+            printToFile(std::to_string(ballsInLeftArea));
+        }
+    }
+}
+
 
 std::thread Ball::moveThread()
 {

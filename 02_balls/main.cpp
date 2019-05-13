@@ -14,7 +14,7 @@
 std::vector<Ball*> balls;
 std::vector<std::thread> ballsThreads;
 static bool running = true;
-int ballsCreationTime = 500;
+int ballsCreationTime = 1000;
 Window *window;
 
 void printToFile(std::string data)
@@ -29,9 +29,8 @@ void generateBalls()
     Ball::setMaximumCords(window->getWidth(), window->getHeight());
     while(running)
     {
-        printToFile(std::to_string(window->getWidth()));
-        printToFile(std::to_string(window->getHeight()));
-
+        // printToFile(std::to_string(window->getWidth()));
+        // printToFile(std::to_string(window->getHeight()));
 
         directon ballDirection = static_cast<directon>(rand() % 8);
         speed ballSpeed = static_cast<speed>(rand() % 2);
@@ -72,6 +71,7 @@ int main(int argc, char *argv[  ])
     Ball::setRunningFlag(true);
     
     window = new Window();  
+    Window::setWallLeftPadding(40);
 
     std::thread renderSceneThread(renderScene);
     std::thread generateBallsThread(generateBalls);

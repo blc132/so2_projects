@@ -11,21 +11,26 @@
 class Window
 {
 public:
+    static int  wallLeftPadding;
+
+    static int  getWallLeftPadding();
+    static void  setWallLeftPadding(int value);
+
     int height;
     int width;
-    int wallLeftPadding = 40;
+    int ballsOnLeftCounter;
 
     Window();
     ~Window();
     void renderScene(std::vector<Ball*> &balls);
     int getHeight();
     int getWidth();
-    int getWallLeftPadding();
 private:
     bool running;
 
     void renderWall();
     void renderBalls(std::vector<Ball*> &balls);
+    void checkIfBallIsOnLeft(Ball* ball);
 };
 
 #endif
