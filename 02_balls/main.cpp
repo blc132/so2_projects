@@ -69,9 +69,11 @@ int main(int argc, char *argv[  ])
 {
     srand(time(NULL));
     Ball::setRunningFlag(true);
-    
+    Ball::setMaxNumberOfBallsInLeftArea(5);
+
     window = new Window();  
     Window::setWallLeftPadding(40);
+    
 
     std::thread renderSceneThread(renderScene);
     std::thread generateBallsThread(generateBalls);

@@ -30,7 +30,6 @@ private:
 
     void renderWall();
     void renderBalls(std::vector<Ball*> &balls);
-    void checkIfBallIsOnLeft(Ball* ball);
 };
 
 #endif

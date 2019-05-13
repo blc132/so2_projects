@@ -86,17 +86,21 @@ void Ball::setInLeftArea(bool value)
 void Ball::move()
 {
     while(runningFlag) {
-        this->checkIfIsInLeftArea();
-        if (this->x >= xMax  || this->x <= 0) {
+        if(!(ballsInLeftArea >= maxNumberOfBallsInLeftArea && this->inLeftArea && this->x)
+        {
+           if (this->x >= xMax  || this->x <= 0) {
             xDirection = -xDirection;
+            }
+
+            if (this->y >= yMax || this->y <= 0) {
+                yDirection = -yDirection;
+            }
+
+            y += yDirection;
+            x += xDirection;         
         }
 
-        if (this->y >= yMax || this->y <= 0) {
-            yDirection = -yDirection;
-        }
-
-        y += yDirection;
-        x += xDirection;
+        this->checkIfIsInLeftArea();
         std::this_thread::sleep_for(std::chrono::milliseconds(slowdown));
     }
 }
@@ -184,9 +188,9 @@ void Ball::setSpeed(speed ballSpeed)
 
 void Ball::checkIfIsInLeftArea()
 {
-    if(this->getX() <= Window::getWallLeftPadding())
+    if(x <= Window::getWallLeftPadding())
     {
-        if(this->getInLeftArea() == false)
+        if(inLeftArea == false)
         {
             inLeftArea = true; 
             ballsInLeftArea++;
@@ -195,7 +199,7 @@ void Ball::checkIfIsInLeftArea()
     }
     else
     {
-        if(this->getInLeftArea() == true)
+        if(inLeftArea == true)
         {
             inLeftArea = false; 
             ballsInLeftArea--;
