@@ -9,15 +9,18 @@ int Ball::ballsInLeftArea;
 int Ball::maxNumberOfBallsInLeftArea;
 bool Ball::runningFlag;
 
+#pragma region CONSTRUCTORS_DESTRUCTORS
+
 Ball::Ball()
 {
 
 }
 
-Ball::Ball(int x, int y, speed ballSpeed, directon ballDirection)
+Ball::Ball(int x, int y, speed ballSpeed, directon ballDirection, int id)
 {
     this->x = x;
     this->y = y;
+    this->id = id;
     setDirection(ballDirection);
     setSpeed(ballSpeed);
 }
@@ -26,6 +29,7 @@ Ball::~Ball()
 {
 
 }
+#pragma endregion
 
 #pragma region GETTERS_SETTERS
 void Ball::setMaximumCords(int windowX, int windowY)
@@ -83,17 +87,24 @@ void Ball::setInLeftArea(bool value)
 {
     this->inLeftArea = value;
 }
+
+int Ball::getId()
+{
+    return this->id;
+}
 #pragma endregion
 
 void Ball::move()
 {
     while(runningFlag) {
+
         checkLeftAreaMutex.lock();
         this->checkIfIsInLeftArea();
+        checkLeftAreaMutex.unlock();        
+        
         bool canMove = !(ballsInLeftArea >= maxNumberOfBallsInLeftArea && !this->inLeftArea && this->x == Window::getWallLeftPadding());
-        checkLeftAreaMutex.unlock();
-
-
+        // printToFile("pilka nr: " + std::to_string(this->id));
+        // std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
         if(canMove)
         {
@@ -107,7 +118,7 @@ void Ball::move()
 
             y += yDirection;
             x += xDirection;         
-        }                
+        }                      
         std::this_thread::sleep_for(std::chrono::milliseconds(slowdown));
     }
 }
@@ -197,16 +208,16 @@ void Ball::checkIfIsInLeftArea()
 {
     if(x < Window::getWallLeftPadding())
     {
-        if(inLeftArea == false)
+        if(!inLeftArea && ballsInLeftArea < maxNumberOfBallsInLeftArea)
         {
-            inLeftArea = true; 
+            inLeftArea = true;
             ballsInLeftArea++;
             printToFile(std::to_string(ballsInLeftArea));
         }
     }
     else
     {
-        if(inLeftArea == true)
+        if(inLeftArea)
         {
             inLeftArea = false; 
             ballsInLeftArea--;

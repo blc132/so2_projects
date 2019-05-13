@@ -13,7 +13,7 @@ class Ball
 {
 public:
     Ball();
-    Ball(int x, int y, speed ballSpeed, directon ballDirection);
+    Ball(int x, int y, speed ballSpeed, directon ballDirection, int id);
     ~Ball();
 
     static void setMaximumCords(int windowX, int windowY);
@@ -24,15 +24,17 @@ public:
     static int getMaxNumberOfBallsInLeftArea();
     static void setMaxNumberOfBallsInLeftArea(int value);
 
-    void move();
     int getX();
     int getY();
     bool getInLeftArea();
     void setInLeftArea(bool value);
-    void printLogs();
     void setDirection(directon ballDirection);
     void setSpeed(speed ballSpeed);
+    int getId();
+
+    void move();
     void checkIfIsInLeftArea();
+    void printLogs();
 
     std::thread moveThread();
 
@@ -42,14 +44,16 @@ private:
     static bool runningFlag;
     static int ballsInLeftArea;
     static int maxNumberOfBallsInLeftArea;
+
+    std::mutex checkLeftAreaMutex;
+
     bool inLeftArea = false;
     int x;
     int y;
     int xDirection;
     int yDirection;
     int slowdown;
-
-    std::mutex checkLeftAreaMutex;
+    int id;
 };
 
 #endif

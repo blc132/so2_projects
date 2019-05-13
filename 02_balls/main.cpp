@@ -14,6 +14,7 @@
 std::vector<Ball*> balls;
 std::vector<std::thread> ballsThreads;
 static bool running = true;
+static int ballsIdCounter = 0;
 int ballsCreationTime = 1000;
 Window *window;
 
@@ -30,11 +31,11 @@ void generateBalls()
     while(running)
     {
         // printToFile(std::to_string(window->getWidth()));
-        // printToFile(std::to_string(window->getHeight()));
+        // printToFile(std::to_string(window->getHeight()));     
 
         directon ballDirection = static_cast<directon>(rand() % 8);
         speed ballSpeed = static_cast<speed>(rand() % 2);
-        balls.push_back(new Ball(window->getWidth()/2, window->getHeight()/2, ballSpeed, ballDirection));
+        balls.push_back(new Ball(window->getWidth()/2, window->getHeight()/2, ballSpeed, ballDirection, ballsIdCounter++));
         ballsThreads.push_back(balls.back()->moveThread());
         std::this_thread::sleep_for(std::chrono::milliseconds(ballsCreationTime));
     }
@@ -72,7 +73,7 @@ int main(int argc, char *argv[  ])
     Ball::setMaxNumberOfBallsInLeftArea(5);
 
     window = new Window();  
-    Window::setWallLeftPadding(40);
+    Window::setWallLeftPadding(20);
     
 
     std::thread renderSceneThread(renderScene);
