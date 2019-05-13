@@ -72,7 +72,9 @@ void Ball::printLogs()
     std::cout<<"xDirection: "<<std::to_string(xDirection)<<" yDirection: "<<std::to_string(yDirection)<<std::endl;
 }
 
-void Ball::setDirection(directon ballDirection) {
+void Ball::setDirection(directon ballDirection) 
+{
+
     switch (ballDirection)
     {
         case up:
@@ -148,9 +150,3 @@ std::thread Ball::moveThread()
 {
     return std::thread(&Ball::move, this);
 }
-
-
-
-
-
-

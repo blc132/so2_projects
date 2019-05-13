@@ -6,26 +6,36 @@
 #include <random>
 #include <chrono>
 #include <vector>
+#include <fstream>
 
 #include "include/Ball.h"
+#include "include/Window.h"
 
 std::vector<Ball*> balls;
 std::vector<std::thread> ballsThreads;
 static bool running = true;
-int ballsCreationTime = 5000;
-int xMax, yMax;
+int ballsCreationTime = 500;
+Window *window;
 
+void printToFile(std::string data)
+{
+    std::ofstream myfile("logfile.txt", std::ios_base::app | std::ios_base::out);
+    myfile <<  data + " " << std::endl;
+    myfile.close();
+}
 
 void generateBalls()
 {
+    Ball::setMaximumCords(window->getWidth(), window->getHeight());
     while(running)
     {
-        getmaxyx(stdscr, yMax, xMax);
-        Ball::setMaximumCords(xMax, yMax);
+        printToFile(std::to_string(window->getWidth()));
+        printToFile(std::to_string(window->getHeight()));
+
+
         directon ballDirection = static_cast<directon>(rand() % 8);
         speed ballSpeed = static_cast<speed>(rand() % 2);
-
-        balls.push_back(new Ball(xMax/2, yMax/2, ballSpeed, ballDirection));
+        balls.push_back(new Ball(window->getWidth()/2, window->getHeight()/2, ballSpeed, ballDirection));
         ballsThreads.push_back(balls.back()->moveThread());
         std::this_thread::sleep_for(std::chrono::milliseconds(ballsCreationTime));
     }
@@ -35,15 +45,7 @@ void renderScene()
 {
     while(running)
     {
-        clear();
-
-        for(int i = 0; i < balls.size(); i++)
-        {
-            mvprintw(balls[i]->getY(), balls[i]->getX(), "o" );
-        }
-
-        refresh();
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        window->renderBalls(balls);
     }
 }
 
@@ -67,9 +69,10 @@ void checkIfRunning()
 int main(int argc, char *argv[  ])
 {
     srand(time(NULL));
-    initscr();
-    curs_set(0);
     Ball::setRunningFlag(true);
+    
+    window = new Window();
+    
 
     std::thread renderSceneThread(renderScene);
     std::thread generateBallsThread(generateBalls);
