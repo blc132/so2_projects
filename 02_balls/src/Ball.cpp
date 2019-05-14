@@ -1,6 +1,7 @@
 #include "../include/Ball.h"
 #include "../include/Window.h"
 
+
 extern void printToFile(std::string data);
 
 int Ball::xMax;
@@ -10,6 +11,7 @@ int Ball::maxNumberOfBallsInLeftArea;
 bool Ball::runningFlag;
 
 std::mutex checkLeftAreaMutex;
+std::condition_variable cv;
 
 #pragma region CONSTRUCTORS_DESTRUCTORS
 
@@ -99,12 +101,14 @@ int Ball::getId()
 void Ball::move()
 {
     while(runningFlag) {
-
         std::unique_lock<std::mutex> lock(checkLeftAreaMutex);
-        printToFile("Zablokowany przez: " + std::to_string(id));
-        this->checkIfIsInLeftArea();
+        // printToFile("Zablokowany przez: " + std::to_string(id));
+        this->checkIfIsInLeftArea();         
         bool canMove = !(ballsInLeftArea >= maxNumberOfBallsInLeftArea && !this->inLeftArea && this->x == Window::getWallLeftPadding());
-        lock.unlock();      
+        if(!canMove)
+            cv.wait(lock);
+        lock.unlock();     
+
 
         if(canMove)
         {
@@ -118,6 +122,10 @@ void Ball::move()
 
             y += yDirection;
             x += xDirection;         
+        }
+        else{
+            // std::unique_lock<std::mutex> lock(checkLeftAreaMutex);
+
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(slowdown));
     }
@@ -211,12 +219,13 @@ void Ball::checkIfIsInLeftArea()
         if(!inLeftArea && ballsInLeftArea < maxNumberOfBallsInLeftArea)
         {
             inLeftArea = true;
+
+            //do testów żeby pokazać, że mutexy działają   
+            for(int k=0;k<10000000;k++)
+            {
                 int x = 0;
-                for(int k=0;k<10000000;k++)
-                {
-                    x++;
-                }
-            ballsInLeftArea++;
+            }
+            ballsInLeftArea++;            
             printToFile("Aktualnie w lewym obszarze: " + std::to_string(ballsInLeftArea));
             printToFile("Do obszaru wleciała piłka o ID: " + std::to_string(this->id));
         }
@@ -227,6 +236,7 @@ void Ball::checkIfIsInLeftArea()
         {
             inLeftArea = false; 
             ballsInLeftArea--;
+            cv.notify_one();
             printToFile("Aktualnie w lewym obszarze: " + std::to_string(ballsInLeftArea));
             printToFile("Z obszaru wyleciała piłka o ID: " + std::to_string(this->id));
         }

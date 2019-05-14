@@ -6,6 +6,7 @@
 #include <chrono>
 #include <mutex>
 #include <ncurses.h>
+#include <condition_variable>
 #include "../enums/direction.h"
 #include "../enums/speed.h"
 
