@@ -12,4 +12,18 @@ Poszczególne projekty:
   - 02_balls - rozwinięcie pierwszego projektu. Wydzielenie obszaru, w którym może być tylko "n" kulek. Jeśli jakaś kulka chce wleciec ponad stan to jest usypiana i czeka aż zrobi się miejsce. Zasada kolejkowania: first in first out.
        ```sh
         g++ src/Ball.cpp src/Window.cpp main.cpp -lncurses && ./main.out
-  - 03_???
+  - 03_shop_simulation - symulacja sklepu.  
+
+     Są trzy typy produktów:
+     - jajka - generowane w czasie Tj
+     - bułki - generowane w czasie Tb
+     - wędliny - generowane w czasie Tw
+     Jest jedna lada, z której klienci biorą produkty
+     
+     Są trzy kasy. Klient jest obsługiwany w czasie, który jest obliczany na podstawie produktów i numeru kasy
+     
+     Generują się klienci, których droga wygląda następująco:
+     - wejście do sklepu
+     - lada z produktami
+     - kolejka do kas
+     - wyjście ze sklepu
