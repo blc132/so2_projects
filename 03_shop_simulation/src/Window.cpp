@@ -54,6 +54,10 @@ void Window::renderScene()
 
     renderShopCounter();
     renderShopQueue();
+    renderShopCashBox(2, 10, 5, COLOR_WHITE, COLOR_WHITE, 1);
+    renderShopCashBox(12, 10, 6, COLOR_WHITE, COLOR_WHITE, 2);
+    renderShopCashBox(22, 10, 7, COLOR_WHITE, COLOR_WHITE, 3);
+    
 
     refresh();
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -63,7 +67,7 @@ void Window::renderShopCounter()
 {
     init_pair(1, COLOR_WHITE, COLOR_WHITE);
     attron(COLOR_PAIR(1));
-    for (int i = 3; i < 10; i++)
+    for (int i = 4; i < 11; i++)
     {
         for (int j = 90; j < 116; j++)
         {
@@ -72,9 +76,9 @@ void Window::renderShopCounter()
     }
     init_pair(2, COLOR_BLACK, COLOR_WHITE);
     attron(COLOR_PAIR(2));
-    mvprintw(4, 98, (eggsLabel + std::to_string(eggsCounter)).c_str());
-    mvprintw(6, 98, (rollsLabel + std::to_string(rollsCounter)).c_str());
-    mvprintw(8, 98, (meatsLabel + std::to_string(meatsCounter)).c_str());
+    mvprintw(5, 98, (eggsLabel + std::to_string(eggsCounter)).c_str());
+    mvprintw(7, 98, (rollsLabel + std::to_string(rollsCounter)).c_str());
+    mvprintw(9, 98, (meatsLabel + std::to_string(meatsCounter)).c_str());
 }
 
 void Window::renderShopQueue()
@@ -82,7 +86,7 @@ void Window::renderShopQueue()
     init_pair(3, COLOR_WHITE, COLOR_WHITE);
     attron(COLOR_PAIR(3));
 
-    for (int i = 10; i < 15; i++)
+    for (int i = 12; i < 17; i++)
     {
         for (int j = 50; j < 80; j++)
         {
@@ -91,7 +95,23 @@ void Window::renderShopQueue()
     }
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
     attron(COLOR_PAIR(4));
-    mvprintw(10, 61, "KOLEJKA");
+    mvprintw(12, 61, "KOLEJKA");
+}
+
+void Window::renderShopCashBox(int x, int y, short colorNumber, short textColor, short backgroundColor, short cashNumber)
+{
+    init_pair(colorNumber, colorNumber, backgroundColor);
+    attron(COLOR_PAIR(colorNumber));
+
+    for (int i = x; i < x+5; i++)
+    {
+        for (int j = y; j < y+10; j++)
+        {
+            mvprintw(i, j, " ");
+        }
+    }
+    attron(COLOR_PAIR(4));
+    mvprintw(x+2, y, ("KASA NR." + std::to_string(cashNumber)).c_str());
 }
 
 void Window::initializeFields()
