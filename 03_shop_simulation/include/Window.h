@@ -6,12 +6,19 @@
 #include <chrono>
 #include <ncurses.h>
 #include <vector>
+#include <mutex>
 
 class Window
 {
 public:
     int height;
     int width;
+    std::string eggsLabel;
+    std::string rollsLabel;
+    std::string meatsLabel;
+    int eggsCounter;
+    int rollsCounter;
+    int meatsCounter;
 
     Window();
     ~Window();
@@ -20,6 +27,9 @@ public:
     int getWidth();
 private:
     bool running;
+
+    void renderShopCounter();
+    void initializeFields();
 };
 
 #endif
