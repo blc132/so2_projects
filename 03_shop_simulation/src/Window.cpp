@@ -51,13 +51,13 @@ int Window::getWidth()
 void Window::renderScene()
 {
     clear();
-
+    init_pair(1, COLOR_WHITE, COLOR_WHITE);
+    init_pair(2, COLOR_BLACK, COLOR_WHITE);
     renderShopCounter();
     renderShopQueue();
-    renderShopCashBox(2, 10, 5, COLOR_WHITE, COLOR_WHITE, 1);
-    renderShopCashBox(12, 10, 6, COLOR_WHITE, COLOR_WHITE, 2);
-    renderShopCashBox(22, 10, 7, COLOR_WHITE, COLOR_WHITE, 3);
-    
+    renderShopCashBox(2, 10, 1, 1);
+    renderShopCashBox(12, 10, 1, 2);
+    renderShopCashBox(22, 10, 1, 3);
 
     refresh();
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -65,7 +65,6 @@ void Window::renderScene()
 
 void Window::renderShopCounter()
 {
-    init_pair(1, COLOR_WHITE, COLOR_WHITE);
     attron(COLOR_PAIR(1));
     for (int i = 4; i < 11; i++)
     {
@@ -74,7 +73,6 @@ void Window::renderShopCounter()
             mvprintw(i, j, " ");
         }
     }
-    init_pair(2, COLOR_BLACK, COLOR_WHITE);
     attron(COLOR_PAIR(2));
     mvprintw(5, 98, (eggsLabel + std::to_string(eggsCounter)).c_str());
     mvprintw(7, 98, (rollsLabel + std::to_string(rollsCounter)).c_str());
@@ -83,35 +81,31 @@ void Window::renderShopCounter()
 
 void Window::renderShopQueue()
 {
-    init_pair(3, COLOR_WHITE, COLOR_WHITE);
-    attron(COLOR_PAIR(3));
-
+    attron(COLOR_PAIR(1));
     for (int i = 12; i < 17; i++)
     {
-        for (int j = 50; j < 80; j++)
+        for (int j = 42; j < 72; j++)
         {
             mvprintw(i, j, " ");
         }
     }
-    init_pair(4, COLOR_BLACK, COLOR_WHITE);
-    attron(COLOR_PAIR(4));
-    mvprintw(12, 61, "KOLEJKA");
+    attron(COLOR_PAIR(2));
+    mvprintw(12, 53, "KOLEJKA");
 }
 
-void Window::renderShopCashBox(int x, int y, short colorNumber, short textColor, short backgroundColor, short cashNumber)
+void Window::renderShopCashBox(int x, int y, short colorNumber, short cashNumber)
 {
-    init_pair(colorNumber, colorNumber, backgroundColor);
     attron(COLOR_PAIR(colorNumber));
 
-    for (int i = x; i < x+5; i++)
+    for (int i = x; i < x + 5; i++)
     {
-        for (int j = y; j < y+10; j++)
+        for (int j = y; j < y + 10; j++)
         {
             mvprintw(i, j, " ");
         }
     }
-    attron(COLOR_PAIR(4));
-    mvprintw(x+2, y, ("KASA NR." + std::to_string(cashNumber)).c_str());
+    attron(COLOR_PAIR(2));
+    mvprintw(x + 2, y, ("KASA NR." + std::to_string(cashNumber)).c_str());
 }
 
 void Window::initializeFields()
