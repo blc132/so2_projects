@@ -10,7 +10,6 @@ Window::Window()
     clear();
     refresh(); 
     getmaxyx(stdscr, height, width);   
-
 }
 
 Window::~Window()
