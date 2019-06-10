@@ -53,6 +53,7 @@ void Window::renderScene()
     clear();
 
     renderShopCounter();
+    renderShopQueue();
 
     refresh();
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -74,6 +75,23 @@ void Window::renderShopCounter()
     mvprintw(4, 98, (eggsLabel + std::to_string(eggsCounter)).c_str());
     mvprintw(6, 98, (rollsLabel + std::to_string(rollsCounter)).c_str());
     mvprintw(8, 98, (meatsLabel + std::to_string(meatsCounter)).c_str());
+}
+
+void Window::renderShopQueue()
+{
+    init_pair(3, COLOR_WHITE, COLOR_WHITE);
+    attron(COLOR_PAIR(3));
+
+    for (int i = 10; i < 15; i++)
+    {
+        for (int j = 50; j < 80; j++)
+        {
+            mvprintw(i, j, " ");
+        }
+    }
+    init_pair(4, COLOR_BLACK, COLOR_WHITE);
+    attron(COLOR_PAIR(4));
+    mvprintw(10, 61, "KOLEJKA");
 }
 
 void Window::initializeFields()

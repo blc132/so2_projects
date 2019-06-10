@@ -29,6 +29,7 @@ private:
     bool running;
 
     void renderShopCounter();
+    void renderShopQueue();
     void initializeFields();
 };
 
