@@ -53,6 +53,7 @@ void Window::renderScene()
     clear();
     init_pair(1, COLOR_WHITE, COLOR_WHITE);
     init_pair(2, COLOR_BLACK, COLOR_WHITE);
+    renderFrontDoors();
     renderShopCounter();
     renderShopQueue();
     renderShopCashBox(2, 10, 1, 1);
@@ -106,6 +107,20 @@ void Window::renderShopCashBox(int x, int y, short colorNumber, short cashNumber
     }
     attron(COLOR_PAIR(2));
     mvprintw(x + 2, y, ("KASA NR." + std::to_string(cashNumber)).c_str());
+}
+
+void Window::renderFrontDoors()
+{
+    attron(COLOR_PAIR(1));
+    for (int i = 29; i < 32; i++)
+    {
+        for (int j = 90; j < 116; j++)
+        {
+            mvprintw(i, j, " ");
+        }
+    }
+    attron(COLOR_PAIR(2));
+    mvprintw(30, 100, "WEJSCIE");
 }
 
 void Window::initializeFields()
