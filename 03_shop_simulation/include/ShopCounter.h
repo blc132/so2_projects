@@ -16,8 +16,11 @@ public:
 
     ShopCounter();
     ~ShopCounter();
+
+    std::thread generateEggsThread();
+    std::thread generateRollsThread();
+    std::thread generateMeatsThread();
 private:
-    void startGeneratingResources();
     void generateEggs();
     void generateRolls();
     void generateMeats();

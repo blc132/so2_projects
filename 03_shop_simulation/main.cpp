@@ -8,18 +8,31 @@
 #include <vector>
 #include <fstream>
 #include "include/Window.h"
+#include "include/ShopCounter.h"
 #include "include/Data.h"
 
 extern void printToFile(std::string data);
 
 Window *window;
+ShopCounter *shopCounter;
+std::vector<std::thread> generatingThreads;
+
 bool running = true;
+
+
 void renderScene()
 {
     while(running)
     {
         window->renderScene();
     }
+}
+
+void generateResources()
+{
+    generatingThreads.push_back(shopCounter->generateEggsThread());
+    generatingThreads.push_back(shopCounter->generateMeatsThread());
+    generatingThreads.push_back(shopCounter->generateRollsThread());
 }
 
 void checkIfRunning()
@@ -42,11 +55,14 @@ void printToFile(std::string data)
 int main(int argc, char *argv[  ])
 {
     window = new Window();  
+    shopCounter = new ShopCounter();
 
+    std::thread generateResourcesThread(generateResources);
     std::thread renderSceneThread(renderScene);
     std::thread checkIfRunningThread(checkIfRunning);
 
     renderSceneThread.join();
     checkIfRunningThread.join();
+    generateResourcesThread.join();
     return 0;
 }
