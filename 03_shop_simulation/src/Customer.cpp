@@ -1,6 +1,16 @@
 #include "../include/Customer.h"
 
+extern void printToFile(std::string data);
+
 extern bool running;
+extern int eggsCounter;
+extern int rollsCounter;
+extern int meatsCounter;
+
+std::mutex shopCounterMutex;
+std::mutex getResourcesMutex;
+std::mutex shopQueueMutex;
+std::condition_variable cv;
 
 Customer::Customer()
 {
@@ -27,6 +37,9 @@ void Customer::move()
     {
         goToShopCounter();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
+
+        interactionWithShopCounter();
+
         this->hasShopping = true;
         goToShopQueue();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
@@ -44,6 +57,38 @@ void Customer::move()
     //wybierz jedną z kas
 }
 
+void Customer::interactionWithShopCounter()
+{
+    bool shopHasAllProducts = false;
+    while (!shopHasAllProducts)
+    {
+        std::unique_lock<std::mutex> lock(shopCounterMutex);
+        printToFile("shopCounterMutex, gracz nr: " + std::to_string(color));
+        shopHasAllProducts = (needOfEggs <= eggsCounter && needOfMeats <= meatsCounter && needOfRolls <= rollsCounter);    
+
+        if (shopHasAllProducts)
+        {
+            // std::unique_lock<std::mutex> lock(getResourcesMutex);
+            eggsCounter -= needOfEggs;
+            rollsCounter -= needOfRolls;
+            meatsCounter -= needOfMeats;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        lock.unlock(); 
+    }
+
+    // std::unique_lock<std::mutex> lock(checkLeftAreaMutex);
+    // // printToFile("Zablokowany przez: " + std::to_string(id));
+    // this->checkIfIsInLeftArea();
+    // bool canMove = !(ballsInLeftArea >= maxNumberOfBallsInLeftArea && !this->inLeftArea && this->x == Window::getWallLeftPadding());
+    // if(!canMove)
+    //     cv.wait(lock);
+    // lock.unlock();
+
+    // if(canMove)
+}
+
+#pragma region MOVEMENT
 void Customer::goToShopCounter()
 {
     while (this->x >= 12)
@@ -161,6 +206,7 @@ void Customer::goToFrontDoors()
         std::this_thread::sleep_for(std::chrono::milliseconds(rand() % (maxSpeed - this->customSpeed) + minSpeed));
     }
 }
+#pragma endregion
 
 std::thread Customer::moveThread()
 {

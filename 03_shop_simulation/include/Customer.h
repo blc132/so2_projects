@@ -9,6 +9,7 @@
 #include <mutex>
 #include <random>
 #include <chrono>
+#include <condition_variable>
 
 class Customer
 {
@@ -60,6 +61,7 @@ private:
     void goToSecondCashBox();
     void goToThirdCashBox();
     void goToFrontDoors();
+    void interactionWithShopCounter();
 };
 
 #endif
