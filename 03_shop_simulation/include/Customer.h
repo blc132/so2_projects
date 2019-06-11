@@ -36,6 +36,8 @@ public:
     std::string getInfo() { return this->info; }
     void setCustomSpeed(int customSpeed) { this->customSpeed = customSpeed; }
     int getCustomSpeed() { return this->customSpeed; }
+    void setHasShopping(bool hasShopping) { this->hasShopping = hasShopping; }
+    bool getHasShopping() { return this->hasShopping; }
 
     void move();
     std::thread moveThread();
@@ -49,6 +51,7 @@ private:
     int needOfMeats;
     short color;
     std::string info;
+    bool hasShopping = false;
 
     void goToShopCounter();
     void goToShopQueue();

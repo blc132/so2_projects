@@ -27,10 +27,12 @@ void Customer::move()
     {
         goToShopCounter();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
+        this->hasShopping = true;
         goToShopQueue();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
         goToShopCashBox(rand() % 3 + 1);
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
+        this->hasShopping = false;
         goToFrontDoors();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
     }

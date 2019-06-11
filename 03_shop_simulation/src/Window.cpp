@@ -153,8 +153,18 @@ void Window::renderCustomers()
         short color = customers[i]->getColor();
         attron(COLOR_PAIR(color));
         mvprintw(x, y + 1, "o");
-        mvprintw(x + 1, y, ("/" + std::to_string(i) + "\\").c_str());
-        // mvprintw(x + 1, y, "/|\\");
+        if (customers[i]->getHasShopping())
+        {
+            attron(COLOR_PAIR(3));
+            mvprintw(x + 1, y, "#");
+            attron(COLOR_PAIR(color));
+            mvprintw(x + 1, y+1, (std::to_string(i) + "\\").c_str());
+        }
+        else
+        {
+            mvprintw(x + 1, y, ("/" + std::to_string(i) + "\\").c_str());
+        }
+
         mvprintw(x + 2, y, "/ \\");
         mvprintw(17 + i, 42, ("KLIENT NR." + std::to_string(i) + " POTRZEBUJE: " + std::to_string(eggs) + "J/" + std::to_string(rolls) + "B/" + std::to_string(meats) + "W").c_str());
     }
