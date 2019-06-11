@@ -7,6 +7,8 @@
 #include <ncurses.h>
 #include <vector>
 #include <mutex>
+#include <random>
+#include <chrono>
 
 // #include "Data.h"
 
@@ -31,9 +33,8 @@ public:
     void setInfo(std::string info) { this->info = info; }
     std::string getInfo() { return this->info; }
 
-    void goToShopCounter();
-    void goToShopQueue();
-    void goToShopCashBox(int shopCashBoxNumber);
+    void move();
+    std::thread moveThread();
 
 private:
     int x;
@@ -43,6 +44,15 @@ private:
     int needOfMeats;
     short color;
     std::string info;
+    
+
+    void goToShopCounter();
+    void goToShopQueue();
+    void goToShopCashBox(int cashBoxNumber);
+    void goToFirstCashBox();
+    void goToSecondCashBox();
+    void goToThirdCashBox();
+    void goToFrontDoors();
 };
 
 #endif

@@ -85,7 +85,6 @@ void Window::renderShopCounter()
         }
     }
     attron(COLOR_PAIR(2));
-    printToFile(std::to_string(eggsCounter));
     mvprintw(5, 98, (eggsLabel + std::to_string(eggsCounter)).c_str());
     mvprintw(7, 98, (rollsLabel + std::to_string(rollsCounter)).c_str());
     mvprintw(9, 98, (meatsLabel + std::to_string(meatsCounter)).c_str());
@@ -94,7 +93,7 @@ void Window::renderShopCounter()
 void Window::renderShopQueue()
 {
     attron(COLOR_PAIR(1));
-    for (int i = 12; i < 17; i++)
+    for (int i = 14; i < 17; i++)
     {
         for (int j = 42; j < 75; j++)
         {
@@ -102,28 +101,43 @@ void Window::renderShopQueue()
         }
     }
     attron(COLOR_PAIR(2));
-    mvprintw(12, 53, "KOLEJKA");
+    mvprintw(10, 42, "             KOLEJKA             ");
 }
 
 void Window::renderShopCashBox(int x, int y, short colorNumber, short cashNumber)
 {
     attron(COLOR_PAIR(colorNumber));
 
+    // for (int i = x + 4; i < x + 5; i++)
+    // {
+    //     for (int j = y; j < y + 10; j++)
+    //     {
+    //         mvprintw(i, j, " ");
+    //     }
+    // }
+    for (int i = y; i < y + 10; i++)
+    {
+        mvprintw(x + 4, i, " ");
+    }
+
     for (int i = x; i < x + 5; i++)
     {
-        for (int j = y; j < y + 10; j++)
-        {
-            mvprintw(i, j, " ");
-        }
+        mvprintw(i, y, " ");
     }
+
+    for (int i = x; i < x + 5; i++)
+    {
+        mvprintw(i, y + 10, " ");
+    }
+
     attron(COLOR_PAIR(2));
-    mvprintw(x + 2, y, ("KASA NR." + std::to_string(cashNumber)).c_str());
+    mvprintw(x - 1, y, ("KASA NR.  " + std::to_string(cashNumber)).c_str());
 }
 
 void Window::renderFrontDoors()
 {
     attron(COLOR_PAIR(1));
-    for (int i = 29; i < 32; i++)
+    for (int i = 31; i < 32; i++)
     {
         for (int j = 89; j < 119; j++)
         {
@@ -131,7 +145,7 @@ void Window::renderFrontDoors()
         }
     }
     attron(COLOR_PAIR(2));
-    mvprintw(30, 100, "WEJSCIE");
+    mvprintw(31, 100, "WEJSCIE");
 }
 
 void Window::renderCustomers()
@@ -145,11 +159,10 @@ void Window::renderCustomers()
         int meats = customers[i]->getNeedOfMeats();
         short color = customers[i]->getColor();
         attron(COLOR_PAIR(color));
-        mvprintw(x, y+1, "o");
-        mvprintw(x+1, y, "/|\\");
-        mvprintw(x+2, y, "/ \\");
-        mvprintw(17+i, 42, ("KLIENT NR." + std::to_string(i) + " POTRZEBUJE: " + std::to_string(eggs) + "J/" + std::to_string(rolls) + "B/" + std::to_string(meats) + "W").c_str());
-        
+        mvprintw(x, y + 1, "o");
+        mvprintw(x + 1, y, "/|\\");
+        mvprintw(x + 2, y, "/ \\");
+        mvprintw(17 + i, 42, ("KLIENT NR." + std::to_string(i) + " POTRZEBUJE: " + std::to_string(eggs) + "J/" + std::to_string(rolls) + "B/" + std::to_string(meats) + "W").c_str());
     }
 }
 
