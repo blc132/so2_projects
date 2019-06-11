@@ -18,7 +18,7 @@ public:
     int const pauseBetweenMoves = 500;
 
     Customer();
-    Customer(int x, int y, int needOfEggs, int needOfRolls, int needOfMeats, short color);
+    Customer(int x, int y, int customSpeed, int needOfEggs, int needOfRolls, int needOfMeats, short color);
     ~Customer();
     void setX(int x) { this->x = x; }
     int getX() { return this->x; }
@@ -34,6 +34,8 @@ public:
     int getColor() { return this->color; }
     void setInfo(std::string info) { this->info = info; }
     std::string getInfo() { return this->info; }
+    void setCustomSpeed(int customSpeed) { this->customSpeed = customSpeed; }
+    int getCustomSpeed() { return this->customSpeed; }
 
     void move();
     std::thread moveThread();
@@ -41,12 +43,12 @@ public:
 private:
     int x;
     int y;
+    int customSpeed;
     int needOfEggs;
     int needOfRolls;
     int needOfMeats;
     short color;
     std::string info;
-    
 
     void goToShopCounter();
     void goToShopQueue();

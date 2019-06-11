@@ -17,33 +17,42 @@ extern void printToFile(std::string data);
 Window *window;
 ShopCounter *shopCounter;
 std::vector<std::thread> generatingThreads;
-std::vector<Customer*> customers;
+std::vector<Customer *> customers;
 std::vector<std::thread> customersThreads;
 
 bool running = true;
 
-
 void createCustomers()
 {
     //6
-    customers.push_back(new Customer(27, 90, rand() % 10, rand() % 10, rand() % 10, 3));
+    customers.push_back(new Customer(27, 100, rand() % 200 + 0, rand() % 10, rand() % 10, rand() % 10, 3));
     customersThreads.push_back(customers.back()->moveThread());
-    customers.push_back(new Customer(27, 95, rand() % 10, rand() % 10, rand() % 10, 4));
-    customersThreads.push_back(customers.back()->moveThread());
-    customers.push_back(new Customer(27, 100, rand() % 10, rand() % 10, rand() % 10, 5));
-    customersThreads.push_back(customers.back()->moveThread());
-    customers.push_back(new Customer(27, 105, rand() % 10, rand() % 10, rand() % 10, 6));
-    customersThreads.push_back(customers.back()->moveThread());
-    customers.push_back(new Customer(27, 110, rand() % 10, rand() % 10, rand() % 10, 7));
-    customersThreads.push_back(customers.back()->moveThread());
-    customers.push_back(new Customer(27, 115, rand() % 10, rand() % 10, rand() % 10, 8));
-    customersThreads.push_back(customers.back()->moveThread());
-}
+    std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 2000));
 
+    customers.push_back(new Customer(27, 100, rand() % 200 + 0, rand() % 10, rand() % 10, rand() % 10, 4));
+    customersThreads.push_back(customers.back()->moveThread());
+    std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 2000));
+
+    customers.push_back(new Customer(27, 100, rand() % 200 + 0, rand() % 10, rand() % 10, rand() % 10, 5));
+    customersThreads.push_back(customers.back()->moveThread());
+    std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 2000));
+
+    customers.push_back(new Customer(27, 100, rand() % 200 + 0, rand() % 10, rand() % 10, rand() % 10, 6));
+    customersThreads.push_back(customers.back()->moveThread());
+    std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 2000));
+
+    customers.push_back(new Customer(27, 100, rand() % 200 + 0, rand() % 10, rand() % 10, rand() % 10, 7));
+    customersThreads.push_back(customers.back()->moveThread());
+    std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 2000));
+
+    customers.push_back(new Customer(27, 100, rand() % 200 + 0, rand() % 10, rand() % 10, rand() % 10, 8));
+    customersThreads.push_back(customers.back()->moveThread());
+    std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 2000));
+}
 
 void renderScene()
 {
-    while(running)
+    while (running)
     {
         window->renderScene();
     }
@@ -75,7 +84,7 @@ void checkIfRunning()
 {
     cbreak();
     noecho();
-    while('x' != getch())
+    while ('x' != getch())
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     running = false;
 }
@@ -83,21 +92,20 @@ void checkIfRunning()
 void printToFile(std::string data)
 {
     std::ofstream myfile("logfile.txt", std::ios_base::app | std::ios_base::out);
-    myfile <<  data + " " << std::endl;
+    myfile << data + " " << std::endl;
     myfile.close();
 }
 
-
-int main(int argc, char *argv[  ])
+int main(int argc, char *argv[])
 {
     srand(time(NULL));
-    window = new Window();  
-    shopCounter = new ShopCounter();
-    createCustomers();
+    window = new Window();
+    shopCounter = new ShopCounter();    
 
     std::thread generateResourcesThread(generateResources);
     std::thread renderSceneThread(renderScene);
     std::thread checkIfRunningThread(checkIfRunning);
+    createCustomers();
 
     renderSceneThread.join();
     checkIfRunningThread.join();
