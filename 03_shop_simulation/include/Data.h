@@ -1,9 +1,7 @@
-
 #include "Customer.h"
 #include <vector>
 namespace Data
 {
-
 extern int eggsCounter;
 extern int rollsCounter;
 extern int meatsCounter;
@@ -13,4 +11,4 @@ extern int rollsGenerationTime;
 extern int meatsGenerationTime;
 extern std::vector<Customer *> customers;
 
-}
+} 
