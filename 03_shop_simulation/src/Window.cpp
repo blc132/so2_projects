@@ -4,11 +4,12 @@ extern void printToFile(std::string data);
 extern int eggsCounter;
 extern int rollsCounter;
 extern int meatsCounter;
+extern std::vector<Customer *> customers;
 
 Window::Window()
 {
-    initializeFields();
     //width: 122 height: 32
+    initializeFields();
     initscr();
     noecho();
     curs_set(FALSE);
@@ -54,12 +55,20 @@ void Window::renderScene()
     clear();
     init_pair(1, COLOR_WHITE, COLOR_WHITE);
     init_pair(2, COLOR_BLACK, COLOR_WHITE);
+    init_pair(3, COLOR_WHITE, COLOR_BLACK);
+    init_pair(4, COLOR_BLUE, COLOR_BLACK);
+    init_pair(5, COLOR_CYAN, COLOR_BLACK);
+    init_pair(6, COLOR_GREEN, COLOR_BLACK);
+    init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(8, COLOR_YELLOW, COLOR_BLACK);
+
     renderFrontDoors();
     renderShopCounter();
     renderShopQueue();
     renderShopCashBox(2, 10, 1, 1);
     renderShopCashBox(12, 10, 1, 2);
     renderShopCashBox(22, 10, 1, 3);
+    renderCustomers();
 
     refresh();
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -125,12 +134,23 @@ void Window::renderFrontDoors()
     mvprintw(30, 100, "WEJSCIE");
 }
 
+void Window::renderCustomers()
+{
+    for (int i = 0; i < customers.size(); i++)
+    {
+        int x = customers[i]->getX();
+        int y = customers[i]->getY();
+        short color = customers[i]->getColor();
+        attron(COLOR_PAIR(color));
+        mvprintw(x, y+1, "o");
+        mvprintw(x+1, y, "/|\\");
+        mvprintw(x+2, y, "/ \\");
+    }
+}
+
 void Window::initializeFields()
 {
     eggsLabel = "Jajka:   ";
     rollsLabel = "Bulki:   ";
     meatsLabel = "Wedliny: ";
-    // eggsCounter = 0;
-    // rollsCounter = 0;
-    // meatsCounter = 0;
 }

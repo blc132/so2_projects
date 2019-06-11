@@ -9,6 +9,7 @@
 #include <fstream>
 #include "include/Window.h"
 #include "include/ShopCounter.h"
+#include "include/Customer.h"
 #include "include/Data.h"
 
 extern void printToFile(std::string data);
@@ -16,8 +17,20 @@ extern void printToFile(std::string data);
 Window *window;
 ShopCounter *shopCounter;
 std::vector<std::thread> generatingThreads;
+std::vector<Customer*> customers;
 
 bool running = true;
+
+
+void createCustomers()
+{
+    customers.push_back(new Customer(27, 90, 5, 5, 5, 3));
+    customers.push_back(new Customer(27, 95, 5, 5, 5, 4));
+    customers.push_back(new Customer(27, 100, 5, 5, 5, 5));
+    customers.push_back(new Customer(27, 105, 5, 5, 5, 6));
+    customers.push_back(new Customer(27, 110, 5, 5, 5, 7));
+    customers.push_back(new Customer(27, 115, 5, 5, 5, 8));
+}
 
 
 void renderScene()
@@ -56,6 +69,7 @@ int main(int argc, char *argv[  ])
 {
     window = new Window();  
     shopCounter = new ShopCounter();
+    createCustomers();
 
     std::thread generateResourcesThread(generateResources);
     std::thread renderSceneThread(renderScene);

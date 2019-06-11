@@ -31,6 +31,7 @@ private:
     void renderShopQueue();
     void renderShopCashBox(int x, int y, short colorNumber, short cashNumber);
     void renderFrontDoors();
+    void renderCustomers();
     void initializeFields();
 };
 

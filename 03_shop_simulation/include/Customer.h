@@ -8,16 +8,38 @@
 #include <vector>
 #include <mutex>
 
-#include "Data.h"
+// #include "Data.h"
 
 class Customer
 {
 public:
-
     Customer();
+    Customer(int x, int y, int needOfEggs, int needOfRolls, int needOfMeats, short color);
     ~Customer();
-private:
+    void setX(int x) { this->x = x; }
+    int getX() { return this->x; }
+    void setY(int y) { this->y = y; }
+    int getY() { return this->y; }
+    void setNeedOfEggs(int needOfEggs) { this->needOfEggs = needOfEggs; }
+    int getNeedOfEggs() { return this->needOfEggs; }
+    void setNeedOfRolls(int needOfRolls) { this->needOfRolls = needOfRolls; }
+    int getNeedOfRolls() { return this->needOfRolls; }
+    void setNeedOfMeats(int needOfMeats) { this->needOfMeats = needOfMeats; }
+    int getNeedOfMeats() { return this->needOfMeats; }
+    void setColor(int color) { this->color = color; }
+    int getColor() { return this->color; }
 
+    void goToShopCounter();
+    void goToShopQueue();
+    void goToShopCashBox(int shopCashBoxNumber);
+
+private:
+    int x;
+    int y;
+    int needOfEggs;
+    int needOfRolls;
+    int needOfMeats;
+    short color;
 };
 
 #endif
