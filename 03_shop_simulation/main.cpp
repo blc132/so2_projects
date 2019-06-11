@@ -8,12 +8,12 @@
 #include <vector>
 #include <fstream>
 #include "include/Window.h"
+#include "include/Data.h"
 
 extern void printToFile(std::string data);
 
 Window *window;
 bool running = true;
-
 void renderScene()
 {
     while(running)
@@ -41,8 +41,8 @@ void printToFile(std::string data)
 
 int main(int argc, char *argv[  ])
 {
-
     window = new Window();  
+
     std::thread renderSceneThread(renderScene);
     std::thread checkIfRunningThread(checkIfRunning);
 

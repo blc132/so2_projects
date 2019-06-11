@@ -8,6 +8,8 @@
 #include <vector>
 #include <mutex>
 
+#include "Data.h"
+
 class Window
 {
 public:
@@ -16,15 +18,12 @@ public:
     std::string eggsLabel;
     std::string rollsLabel;
     std::string meatsLabel;
-    int eggsCounter;
-    int rollsCounter;
-    int meatsCounter;
-
     Window();
     ~Window();
     void renderScene();
     int getHeight();
     int getWidth();
+
 private:
     bool running;
 

@@ -1,8 +1,9 @@
 #include "../include/Window.h"
-#include <vector>
-#include <ncurses.h>
 
 extern void printToFile(std::string data);
+extern int eggsCounter;
+extern int rollsCounter;
+extern int meatsCounter;
 
 Window::Window()
 {
@@ -75,6 +76,7 @@ void Window::renderShopCounter()
         }
     }
     attron(COLOR_PAIR(2));
+    printToFile(std::to_string(eggsCounter));
     mvprintw(5, 98, (eggsLabel + std::to_string(eggsCounter)).c_str());
     mvprintw(7, 98, (rollsLabel + std::to_string(rollsCounter)).c_str());
     mvprintw(9, 98, (meatsLabel + std::to_string(meatsCounter)).c_str());
@@ -128,7 +130,7 @@ void Window::initializeFields()
     eggsLabel = "Jajka:   ";
     rollsLabel = "Bulki:   ";
     meatsLabel = "Wedliny: ";
-    eggsCounter = 0;
-    rollsCounter = 0;
-    meatsCounter = 0;
+    // eggsCounter = 0;
+    // rollsCounter = 0;
+    // meatsCounter = 0;
 }
