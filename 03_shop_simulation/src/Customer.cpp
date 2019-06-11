@@ -18,3 +18,8 @@ Customer::Customer(int x, int y, int needOfEggs, int needOfRolls, int needOfMeat
     this->needOfMeats = needOfMeats;
     this->color = color;
 }
+
+void Customer::goToShopCounter()
+{
+
+}

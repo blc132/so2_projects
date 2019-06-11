@@ -24,12 +24,13 @@ bool running = true;
 
 void createCustomers()
 {
-    customers.push_back(new Customer(27, 90, 5, 5, 5, 3));
-    customers.push_back(new Customer(27, 95, 5, 5, 5, 4));
-    customers.push_back(new Customer(27, 100, 5, 5, 5, 5));
-    customers.push_back(new Customer(27, 105, 5, 5, 5, 6));
-    customers.push_back(new Customer(27, 110, 5, 5, 5, 7));
-    customers.push_back(new Customer(27, 115, 5, 5, 5, 8));
+    //6
+    customers.push_back(new Customer(27, 90, rand() % 10, rand() % 10, rand() % 10, 3));
+    customers.push_back(new Customer(27, 95, rand() % 10, rand() % 10, rand() % 10, 4));
+    customers.push_back(new Customer(27, 100, rand() % 10, rand() % 10, rand() % 10, 5));
+    customers.push_back(new Customer(27, 105, rand() % 10, rand() % 10, rand() % 10, 6));
+    customers.push_back(new Customer(27, 110, rand() % 10, rand() % 10, rand() % 10, 7));
+    customers.push_back(new Customer(27, 115, rand() % 10, rand() % 10, rand() % 10, 8));
 }
 
 
@@ -67,6 +68,7 @@ void printToFile(std::string data)
 
 int main(int argc, char *argv[  ])
 {
+    srand(time(NULL));
     window = new Window();  
     shopCounter = new ShopCounter();
     createCustomers();

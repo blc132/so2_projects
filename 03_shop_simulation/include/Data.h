@@ -12,4 +12,5 @@ extern int eggsGenerationTime;
 extern int rollsGenerationTime;
 extern int meatsGenerationTime;
 extern std::vector<Customer *> customers;
+
 } // namespace Data

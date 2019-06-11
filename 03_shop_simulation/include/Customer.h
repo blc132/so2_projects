@@ -28,6 +28,8 @@ public:
     int getNeedOfMeats() { return this->needOfMeats; }
     void setColor(int color) { this->color = color; }
     int getColor() { return this->color; }
+    void setInfo(std::string info) { this->info = info; }
+    std::string getInfo() { return this->info; }
 
     void goToShopCounter();
     void goToShopQueue();
@@ -40,6 +42,7 @@ private:
     int needOfRolls;
     int needOfMeats;
     short color;
+    std::string info;
 };
 
 #endif

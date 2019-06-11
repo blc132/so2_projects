@@ -1,12 +1,12 @@
 #include "../include/ShopCounter.h"
 
-extern int eggsCounter = 3;
-extern int rollsCounter = 2;
-extern int meatsCounter = 5;
+extern int eggsCounter = 0;
+extern int rollsCounter = 0;
+extern int meatsCounter = 0;
 extern bool running;
-extern int eggsGenerationTime = 500;
-extern int rollsGenerationTime = 300;
-extern int meatsGenerationTime = 200;
+extern int eggsGenerationTime = 5000;
+extern int rollsGenerationTime = 3000;
+extern int meatsGenerationTime = 2000;
 
 ShopCounter::ShopCounter()
 {
