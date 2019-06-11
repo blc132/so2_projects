@@ -61,13 +61,14 @@ void Window::renderScene()
     init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
     init_pair(8, COLOR_YELLOW, COLOR_BLACK);
 
-    renderFrontDoors();
-    renderShopCounter();
     renderShopQueue();
+    renderCustomers();
+    renderWalls();
+    renderShopCounter();
     renderShopCashBox(2, 10, 1, 1);
     renderShopCashBox(12, 10, 1, 2);
     renderShopCashBox(22, 10, 1, 3);
-    renderCustomers();
+    renderFrontDoors();
 
     refresh();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -128,15 +129,16 @@ void Window::renderShopCashBox(int x, int y, short colorNumber, short cashNumber
 void Window::renderFrontDoors()
 {
     attron(COLOR_PAIR(1));
-    for (int i = 31; i < 32; i++)
+    for (int i = 27; i < 28; i++)
     {
-        for (int j = 89; j < 119; j++)
+        for (int j = 105; j < 119; j++)
         {
             mvprintw(i, j, " ");
         }
     }
     attron(COLOR_PAIR(2));
-    mvprintw(31, 100, "WEJSCIE");
+    mvprintw(27, 106, "WEJSCIE");
+    mvprintw(27, 11, "WYJSCIE");
 }
 
 void Window::renderCustomers()
@@ -155,5 +157,30 @@ void Window::renderCustomers()
         // mvprintw(x + 1, y, "/|\\");
         mvprintw(x + 2, y, "/ \\");
         mvprintw(17 + i, 42, ("KLIENT NR." + std::to_string(i) + " POTRZEBUJE: " + std::to_string(eggs) + "J/" + std::to_string(rolls) + "B/" + std::to_string(meats) + "W").c_str());
+    }
+}
+
+void Window::renderWalls()
+{
+    attron(COLOR_PAIR(1));
+
+    for (int j = 10; j < 99; j++)
+    {
+        mvprintw(27, j, " ");
+    }
+
+    for (int j = 5; j < 118; j++)
+    {
+        mvprintw(1, j, " ");
+    }
+
+    for (int j = 1; j < 28; j++)
+    {
+        mvprintw(j, 118, " ");
+    }
+
+    for (int j = 1; j < 28; j++)
+    {
+        mvprintw(j, 5, " ");
     }
 }

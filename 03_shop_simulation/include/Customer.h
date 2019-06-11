@@ -14,8 +14,8 @@ class Customer
 {
 public:
     int const minSpeed = 20;
-    int const maxSpeed = 500;
-    int const pauseBetweenMoves = 500;
+    int const maxSpeed = 30;
+    int const pauseBetweenMoves = 200;
 
     Customer();
     Customer(int x, int y, int customSpeed, int needOfEggs, int needOfRolls, int needOfMeats, short color);
