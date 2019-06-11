@@ -15,9 +15,6 @@ class Window
 public:
     int height;
     int width;
-    std::string eggsLabel;
-    std::string rollsLabel;
-    std::string meatsLabel;
     Window();
     ~Window();
     void renderScene();
@@ -32,7 +29,6 @@ private:
     void renderShopCashBox(int x, int y, short colorNumber, short cashNumber);
     void renderFrontDoors();
     void renderCustomers();
-    void initializeFields();
 };
 
 #endif

@@ -25,11 +25,12 @@ void Customer::move()
     while (running)
     {
         goToShopCounter();
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 500 + 200));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % pauseBetweenMoves));
         goToShopQueue();
         goToShopCashBox(rand() % 3 + 1);
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 500 + 200));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % pauseBetweenMoves));
         goToFrontDoors();
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % pauseBetweenMoves));
     }
     //podejdź do lady
     //czekaj
@@ -44,10 +45,8 @@ void Customer::goToShopCounter()
     while (this->x >= 12)
     {
         this->x--;
-        // std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 500 + 200));
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
 }
 
 void Customer::goToShopQueue()
@@ -55,10 +54,8 @@ void Customer::goToShopQueue()
     while (this->y >= 43)
     {
         this->y--;
-        // std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 500 + 200));
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
 }
 
 void Customer::goToShopCashBox(int cashBoxNumber)
@@ -85,18 +82,18 @@ void Customer::goToFirstCashBox()
     while (this->y >= 38)
     {
         this->y--;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
     while (this->x >= 4)
     {
         this->x--;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
 
     while (this->y >= 15)
     {
         this->y--;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
 }
 
@@ -105,18 +102,18 @@ void Customer::goToSecondCashBox()
     while (this->y >= 38)
     {
         this->y--;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
     while (this->x <= 12)
     {
         this->x++;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
 
     while (this->y >= 15)
     {
         this->y--;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
 }
 
@@ -125,40 +122,40 @@ void Customer::goToThirdCashBox()
     while (this->y >= 38)
     {
         this->y--;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
     while (this->x <= 22)
     {
         this->x++;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
 
     while (this->y >= 15)
     {
         this->y--;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
     }
 }
 
 void Customer::goToFrontDoors()
 {
-      while (this->y >= 7)
+    while (this->y >= 7)
     {
         this->y--;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
-    }  
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
+    }
 
-          while (this->x <= 27)
+    while (this->x <= 27)
     {
         this->x++;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
-    }  
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
+    }
 
-              while (this->y <= 100)
+    while (this->y <= 100)
     {
         this->y++;
-        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 50 + 20));
-    }  
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % maxSpeed + minSpeed));
+    }
 }
 
 std::thread Customer::moveThread()

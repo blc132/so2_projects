@@ -9,7 +9,6 @@ extern std::vector<Customer *> customers;
 Window::Window()
 {
     //width: 122 height: 32
-    initializeFields();
     initscr();
     noecho();
     curs_set(FALSE);
@@ -85,9 +84,9 @@ void Window::renderShopCounter()
         }
     }
     attron(COLOR_PAIR(2));
-    mvprintw(5, 98, (eggsLabel + std::to_string(eggsCounter)).c_str());
-    mvprintw(7, 98, (rollsLabel + std::to_string(rollsCounter)).c_str());
-    mvprintw(9, 98, (meatsLabel + std::to_string(meatsCounter)).c_str());
+    mvprintw(5, 98, ("Jajka:   " + std::to_string(eggsCounter)).c_str());
+    mvprintw(7, 98, ("Bulki:   " + std::to_string(rollsCounter)).c_str());
+    mvprintw(9, 98, ("Wedliny: " + std::to_string(meatsCounter)).c_str());
 }
 
 void Window::renderShopQueue()
@@ -107,14 +106,6 @@ void Window::renderShopQueue()
 void Window::renderShopCashBox(int x, int y, short colorNumber, short cashNumber)
 {
     attron(COLOR_PAIR(colorNumber));
-
-    // for (int i = x + 4; i < x + 5; i++)
-    // {
-    //     for (int j = y; j < y + 10; j++)
-    //     {
-    //         mvprintw(i, j, " ");
-    //     }
-    // }
     for (int i = y; i < y + 10; i++)
     {
         mvprintw(x + 4, i, " ");
@@ -131,7 +122,7 @@ void Window::renderShopCashBox(int x, int y, short colorNumber, short cashNumber
     }
 
     attron(COLOR_PAIR(2));
-    mvprintw(x - 1, y, ("KASA NR.  " + std::to_string(cashNumber)).c_str());
+    mvprintw(x - 1, y, ("KASA NR. " + std::to_string(cashNumber) + " ").c_str());
 }
 
 void Window::renderFrontDoors()
@@ -164,11 +155,4 @@ void Window::renderCustomers()
         mvprintw(x + 2, y, "/ \\");
         mvprintw(17 + i, 42, ("KLIENT NR." + std::to_string(i) + " POTRZEBUJE: " + std::to_string(eggs) + "J/" + std::to_string(rolls) + "B/" + std::to_string(meats) + "W").c_str());
     }
-}
-
-void Window::initializeFields()
-{
-    eggsLabel = "Jajka:   ";
-    rollsLabel = "Bulki:   ";
-    meatsLabel = "Wedliny: ";
 }
