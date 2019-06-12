@@ -102,6 +102,9 @@ void printToFile(std::string data)
 int main(int argc, char *argv[])
 {
     printToFile("-----------------");
+    isCashboxFree[0] = true;
+    isCashboxFree[1] = true;
+    isCashboxFree[2] = true;
     srand(time(NULL));
     window = new Window();
     shopCounter = new ShopCounter();

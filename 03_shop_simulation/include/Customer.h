@@ -41,6 +41,8 @@ public:
     bool getHasShopping() { return this->hasShopping; }
     void setId(int id) { this->id = id; }
     int getId() { return this->id; }
+    void setWhichCashbox(short whichCashbox) { this->whichCashbox = whichCashbox; }
+    short getWhichCashbox() { return this->whichCashbox; }
 
     void move();
     std::thread moveThread();
@@ -56,6 +58,7 @@ private:
     short color;
     std::string info;
     bool hasShopping = false;
+    short whichCashbox;
 
     void goToShopCounter();
     void goToShopQueue();
@@ -65,8 +68,11 @@ private:
     void goToThirdCashBox();
     void goToFrontDoors();
     void moveInQueue();
+    void moveAllInQueue();
     void interactionWithShopCounter();
     void interactionWithCashBoxQueue();
+    void interactionWithCashBox();
+    void leaveCashbox();
     bool inShopCounterQueue();
     bool isFirstInShopCounterQueue();
     bool inCashboxQueue();

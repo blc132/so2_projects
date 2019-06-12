@@ -4,9 +4,9 @@ extern int eggsCounter = 0;
 extern int rollsCounter = 0;
 extern int meatsCounter = 0;
 extern bool running;
-extern int eggsGenerationTime = 700;
-extern int rollsGenerationTime = 700;
-extern int meatsGenerationTime = 700;
+extern int eggsGenerationTime = 500;
+extern int rollsGenerationTime = 500;
+extern int meatsGenerationTime = 500;
 
 ShopCounter::ShopCounter()
 {

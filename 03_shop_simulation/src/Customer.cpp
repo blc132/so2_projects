@@ -49,8 +49,10 @@ void Customer::move()
         goToShopQueue();
         interactionWithCashBoxQueue();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
-        goToShopCashBox(rand() % 3 + 1);
-        std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
+        interactionWithCashBox();
+        goToShopCashBox(whichCashbox);
+        std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 5000 + 2000));
+        leaveCashbox();
         this->hasShopping = false;
         goToFrontDoors();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
@@ -68,7 +70,7 @@ void Customer::interactionWithShopCounter()
     // std::unique_lock<std::mutex> vectorLock(vectorMutex);
     if (!inShopCounterQueue())
     {
-        printToFile("DODANO, gracz nr: " + std::to_string(id));
+        // printToFile("DODANO, gracz nr: " + std::to_string(id));
         waitingToShopCounterCustomers.push_back(this);
     }
     // vectorLock.unlock();
@@ -80,12 +82,12 @@ void Customer::interactionWithShopCounter()
 
         if (!isFirstInShopCounterQueue())
         {
-            printToFile("LOCK, gracz nr: " + std::to_string(id));
+            // printToFile("LOCK, gracz nr: " + std::to_string(id));
             cv.wait(lock);
         }
         else
         {
-            printToFile("FIRST, gracz nr: " + std::to_string(id));
+            // printToFile("FIRST, gracz nr: " + std::to_string(id));
             shopHasAllProducts = (needOfEggs <= eggsCounter && needOfMeats <= meatsCounter && needOfRolls <= rollsCounter);
 
             if (shopHasAllProducts)
@@ -135,24 +137,53 @@ void Customer::interactionWithCashBoxQueue()
             {
                 if (isCashboxFree[0])
                 {
-                    goToFirstCashBox();
+                    // goToFirstCashBox();
+                    whichCashbox = 1;
+                    isCashboxFree[0] = false;
                 }
                 else if (isCashboxFree[1])
                 {
-                    goToSecondCashBox();
+                    // goToSecondCashBox();
+                    whichCashbox = 2;
+                    isCashboxFree[1] = false;
                 }
                 else
                 {
-                    goToThirdCashBox();
+                    // goToThirdCashBox();
+                    whichCashbox = 3;
+                    isCashboxFree[2] = false;
                 }
                 cv.notify_all();
 
                 waitingToShopCashBoxCustomers.erase(waitingToShopCashBoxCustomers.begin());
+                moveAllInQueue();
             }
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         lock.unlock();
+    }
+}
+
+void Customer::interactionWithCashBox()
+{
+}
+
+void Customer::leaveCashbox()
+{
+    switch (whichCashbox)
+    {
+    case 1:
+        isCashboxFree[0] = true;
+        break;
+    case 2:
+        isCashboxFree[1] = true;
+        break;
+    case 3:
+        isCashboxFree[2] = true;
+        break;
+    default:
+        break;
     }
 }
 
@@ -211,7 +242,7 @@ void Customer::goToShopCounter()
 void Customer::moveInQueue()
 {
     int queueSize = waitingToShopCashBoxCustomers.size();
-    int stepsToDo = 6 - queueSize;
+    int stepsToDo = (6 - queueSize) * 3;
     for (int i = 0; i < stepsToDo; i++)
     {
         y--;
@@ -219,9 +250,18 @@ void Customer::moveInQueue()
     }
 }
 
+void Customer::moveAllInQueue()
+{
+    for (int j = 0; j < waitingToShopCashBoxCustomers.size(); j++)
+    {
+        int tempY = waitingToShopCashBoxCustomers[0]->getY();
+        waitingToShopCashBoxCustomers[0]->setY(tempY - 3);
+    }
+}
+
 void Customer::goToShopQueue()
 {
-    while (this->y >= 49)
+    while (this->y >= 58)
     {
         this->y--;
         std::this_thread::sleep_for(std::chrono::milliseconds(rand() % (maxSpeed - this->customSpeed) + minSpeed));
