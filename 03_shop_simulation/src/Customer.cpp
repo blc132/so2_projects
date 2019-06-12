@@ -49,7 +49,6 @@ void Customer::move()
         goToShopQueue();
         interactionWithCashBoxQueue();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
-        interactionWithCashBox();
         goToShopCashBox(whichCashbox);
         std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 5000 + 2000));
         leaveCashbox();
@@ -57,12 +56,6 @@ void Customer::move()
         goToFrontDoors();
         std::this_thread::sleep_for(std::chrono::milliseconds(pauseBetweenMoves));
     }
-    //podejdź do lady
-    //czekaj
-    //weź to co chcesz
-    //idz do kolejki do kasy
-    //czekaj
-    //wybierz jedną z kas
 }
 
 void Customer::interactionWithShopCounter()
@@ -108,15 +101,12 @@ void Customer::interactionWithShopCounter()
 
 void Customer::interactionWithCashBoxQueue()
 {
-    // isCashboxFree[0] = true;
-    // std::unique_lock<std::mutex> vectorLock(vectorMutex);
     if (!inCashboxQueue())
     {
         printToFile("DODANO, gracz nr: " + std::to_string(id));
         waitingToShopCashBoxCustomers.push_back(this);
         moveInQueue();
     }
-    // vectorLock.unlock();
 
     bool cashBoxIsFree = false;
     while (!cashBoxIsFree)
@@ -137,19 +127,16 @@ void Customer::interactionWithCashBoxQueue()
             {
                 if (isCashboxFree[0])
                 {
-                    // goToFirstCashBox();
                     whichCashbox = 1;
                     isCashboxFree[0] = false;
                 }
                 else if (isCashboxFree[1])
                 {
-                    // goToSecondCashBox();
                     whichCashbox = 2;
                     isCashboxFree[1] = false;
                 }
                 else
                 {
-                    // goToThirdCashBox();
                     whichCashbox = 3;
                     isCashboxFree[2] = false;
                 }
@@ -165,9 +152,6 @@ void Customer::interactionWithCashBoxQueue()
     }
 }
 
-void Customer::interactionWithCashBox()
-{
-}
 
 void Customer::leaveCashbox()
 {
@@ -372,8 +356,4 @@ void Customer::goToFrontDoors()
 std::thread Customer::moveThread()
 {
     return std::thread(&Customer::move, this);
-}
-
-void writeInfo()
-{
 }
