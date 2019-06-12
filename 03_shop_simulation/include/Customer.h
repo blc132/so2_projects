@@ -15,11 +15,11 @@ class Customer
 {
 public:
     int const minSpeed = 20;
-    int const maxSpeed = 30;
+    int const maxSpeed = 20;
     int const pauseBetweenMoves = 200;
 
     Customer();
-    Customer(int x, int y, int customSpeed, int needOfEggs, int needOfRolls, int needOfMeats, short color);
+    Customer(int x, int y, int customSpeed, int needOfEggs, int needOfRolls, int needOfMeats, short color, int id);
     ~Customer();
     void setX(int x) { this->x = x; }
     int getX() { return this->x; }
@@ -39,6 +39,8 @@ public:
     int getCustomSpeed() { return this->customSpeed; }
     void setHasShopping(bool hasShopping) { this->hasShopping = hasShopping; }
     bool getHasShopping() { return this->hasShopping; }
+    void setId(int id) { this->id = id; }
+    int getId() { return this->id; }
 
     void move();
     std::thread moveThread();
@@ -46,6 +48,7 @@ public:
 private:
     int x;
     int y;
+    int id;
     int customSpeed;
     int needOfEggs;
     int needOfRolls;
@@ -61,7 +64,13 @@ private:
     void goToSecondCashBox();
     void goToThirdCashBox();
     void goToFrontDoors();
+    void moveInQueue();
     void interactionWithShopCounter();
+    void interactionWithCashBoxQueue();
+    bool inShopCounterQueue();
+    bool isFirstInShopCounterQueue();
+    bool inCashboxQueue();
+    bool isFirstInCashboxQueue();
 };
 
 #endif
